@@ -1,0 +1,5 @@
+Cookie: SRT=TART_SYNC; TART=%1%enc%3AmK6wqPzMYi%2FwYSofYZZAhM9Ty%2BN0BSrbxkl0qL2J6sV2lvkWYO6oG1KVZ0mnT3CeSKI1v1D0g8c%3D; ServerPool=B; TASession=V2ID.9534606BCE4819361ACF00F52F53F53E*SQ.1*GR.46*TCPAR.65*TBR.82*EXEX.42*ABTR.63*PHTB.88*FS.52*CPU.0*HS.recommended*ES.popularity*AS.popularity*DS.5*SAS.popularity*FPS.oldFirst*FA.1*DF.0*TRA.true; TAUnique=%1%enc%3A7tuNVVU4GsqYrrCo%2FMxiL7GfRQCZ%2FX3el7fJAG1LCrD4Pcv1xsqpBQ%3D%3D; TATravelInfo=V2*A.2*MG.-1*HP.2*FL.3*RS.1
+Accept-Language: en
+Accept-Encoding: gzip,deflate
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+User-Agent: Scrapy/1.5.0 (+https://scrapy.org)

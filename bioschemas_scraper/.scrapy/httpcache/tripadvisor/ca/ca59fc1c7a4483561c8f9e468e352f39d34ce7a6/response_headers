@@ -1,0 +1,12 @@
+Content-Encoding: gzip
+Set-Cookie: PMC=V2*MS.31*MD.20180511*LD.20180511; Domain=www.tripadvisor.com; Path=/; Expires=Sun, 10 May 2020 17:17:47 GMT; Secure; HttpOnly
+Expires: 0
+Vary: Accept-Encoding
+X-Ta-Cdn-Provider: Edgecast
+Server: Apache
+Pragma: no-cache
+Cache-Control: no-cache,no-store,must-revalidate
+Date: Fri, 11 May 2018 17:17:47 GMT
+P3P: CP="NOI CURa ADMa DEVa TAIa OUR BUS IND UNI COM NAV INT DSP COR CAO PSA IDC ADM DEVi TAIi PSD IVAi IVDi CONi HIS CNT"
+Content-Type: text/plain;charset=UTF-8
+Timing-Allow-Origin: https://www.tripadvisor.com

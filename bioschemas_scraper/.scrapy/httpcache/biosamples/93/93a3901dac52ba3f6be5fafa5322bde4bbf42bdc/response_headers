@@ -1,0 +1,10 @@
+X-Xss-Protection: 1; mode=block
+Content-Language: en
+X-Application-Context: application:8081
+Content-Encoding: gzip
+Strict-Transport-Security: max-age=0
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+Date: Fri, 11 May 2018 15:55:46 GMT
+X-Frame-Options: DENY
+Content-Type: text/html;charset=UTF-8

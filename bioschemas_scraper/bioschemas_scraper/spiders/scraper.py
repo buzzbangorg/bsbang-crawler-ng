@@ -3,7 +3,7 @@ import bs4
 import json
 import requests
 
-from bioschemas_scraper import extractors
+from extruct.jsonld import JsonLdExtractor  
 
 
 class LocalFileAdapter(requests.adapters.HTTPAdapter):
@@ -41,7 +41,9 @@ class BiosamplesSpider(scrapy.Spider):
 
 
     def parse_sample(self, response):
-        jsonld = self.extract_jsonld_from_url(response.request.url)
+        jslde = JsonLdExtractor()
+        jsonld = jslde.extract(response.body)
+        # jsonld = self.extract_jsonld_from_url(response.request.url)
         yield {'JSONLD' : jsonld}
 
     def extract_jsonld_from_url(self, url):

@@ -1,22 +1,8 @@
 import scrapy
-import bs4
 import json
-import requests
 
 from extruct.jsonld import JsonLdExtractor  
 
-
-class LocalFileAdapter(requests.adapters.HTTPAdapter):
-    def build_response_from_file(self, request):
-        file_path = request.url[7:]
-        with open(file_path, 'rb') as file:
-            buff = bytearray(os.path.getsize(file_path))
-            file.readinto(buff)
-            resp = Resp(buff)
-            r = self.build_response(request, resp)
-            return r
-    def send(self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None):
-        return self.build_response_from_file(request)
 
 class BiosamplesSpider(scrapy.Spider):
     name = "biosamples"
@@ -43,11 +29,5 @@ class BiosamplesSpider(scrapy.Spider):
     def parse_sample(self, response):
         jslde = JsonLdExtractor()
         jsonld = jslde.extract(response.body)
-        # jsonld = self.extract_jsonld_from_url(response.request.url)
         yield {'JSONLD' : jsonld}
-
-    def extract_jsonld_from_url(self, url):
-        requests_session = requests.session()
-        requests_session.mount('file://', LocalFileAdapter())
-        r = requests_session.get(url)
-        return r.text
+        

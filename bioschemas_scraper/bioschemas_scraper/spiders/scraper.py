@@ -2,7 +2,7 @@ import scrapy
 import json
 
 from extruct.jsonld import JsonLdExtractor  
-
+from bioschemas_scraper.items import BioschemasScraperItem
 
 class BiosamplesSpider(scrapy.Spider):
     name = "biosamples"
@@ -10,8 +10,6 @@ class BiosamplesSpider(scrapy.Spider):
     start_urls = ['https://www.ebi.ac.uk/biosamples/samples?start=0',]
 
     def parse(self, response):
-        # for _id in response.xpath("//span[@class='lead float-left text-left']").extract():
-        #     yield {'sample_id' : _id}
 
         base = 'https://www.ebi.ac.uk'
         urls = response.xpath("//a[@class='button readmore float-right']/@href").extract()
@@ -29,5 +27,6 @@ class BiosamplesSpider(scrapy.Spider):
     def parse_sample(self, response):
         jslde = JsonLdExtractor()
         jsonld = jslde.extract(response.body)
-        yield {'JSONLD' : jsonld}
-        
+        item = BioschemasScraperItem()
+        item['jsonld'] = jsonld
+        yield item

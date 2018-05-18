@@ -11,6 +11,4 @@ import scrapy
 class BioschemasScraperItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    sample_id = scrapy.Field()
-    sample_key = scrapy.Field()
-    pass
+    jsonld = scrapy.Field()

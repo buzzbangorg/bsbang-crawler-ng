@@ -14,9 +14,15 @@ BOT_NAME = 'bioschemas_scraper'
 SPIDER_MODULES = ['bioschemas_scraper.spiders']
 NEWSPIDER_MODULE = 'bioschemas_scraper.spiders'
 
+ITEM_PIPELINES = {'bioschemas_scraper.pipelines.MongoDBPipeline': 300}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'bioschemas_scraper (+http://www.yourdomain.com)'
+
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "ebi_biosamples"
+MONGODB_COLLECTION = "samples"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -83,8 +89,10 @@ ROBOTSTXT_OBEY = True
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = True 
+# HTTPCACHE_ENABLED = True 
 #HTTPCACHE_EXPIRATION_SECS = 0
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+

@@ -4,8 +4,8 @@ import json
 from extruct.jsonld import JsonLdExtractor  
 from bioschemas_scraper.items import BioschemasScraperItem
 
-class BiosamplesSpider(scrapy.Spider):
-    name = "biosamples"
+class BiosamplesPaginationSpider(scrapy.Spider):
+    name = "biosamples-pagination"
     allowed_domains = ['ebi.ac.uk']
     start_urls = ['https://www.ebi.ac.uk/biosamples/samples?start=0',]
 
@@ -22,7 +22,6 @@ class BiosamplesSpider(scrapy.Spider):
         if next_page_url is not None:
             request = scrapy.Request(next_page_url, callback = self.parse)
             yield request
-
 
     def parse_sample(self, response):
         jslde = JsonLdExtractor()

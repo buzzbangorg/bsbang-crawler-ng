@@ -6,7 +6,7 @@ Instructions to run -
 
 ```
 cd bioschemas_scraper
-scrapy crawl biosamples -o items.csv -t csv
+python run.py
 ```
 
 The extracted json-ld is temporarily stored in items.csv file. 

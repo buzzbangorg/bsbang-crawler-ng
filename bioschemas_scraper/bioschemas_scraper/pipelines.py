@@ -8,8 +8,9 @@
 import pymongo
 from scrapy.conf import settings
 from scrapy.exceptions import DropItem
-from scrapy import log
+import logging
 
+logger = logging.getLogger('pipelinelogger')
 
 class BioschemasScraperPipeline(object):
     def process_item(self, item, spider):
@@ -22,6 +23,7 @@ class MongoDBPipeline(object):
             settings['MONGODB_SERVER'],
             settings['MONGODB_PORT']
         )
+        logger.info("Connected to MongoDB")
         db = client[settings['MONGODB_DB']]
         self.collection = db[settings['MONGODB_COLLECTION']]
 
@@ -31,5 +33,5 @@ class MongoDBPipeline(object):
                 raise DropItem("Missing data!")
 
         self.collection.update({'jsonld': item['jsonld']}, dict(item), upsert=True)
-        log.msg("Sample added to MongoDB database!", level=log.DEBUG, spider=spider)
+        logger.info("Sample added to MongoDB database!")
         return item

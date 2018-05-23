@@ -1,8 +1,10 @@
-import scrapy
 import json
-
+import scrapy
+import logging
 from extruct.jsonld import JsonLdExtractor  
 from bioschemas_scraper.items import BioschemasScraperItem
+
+logger = logging.getLogger('paginationlogger')
 
 class BiosamplesPaginationSpider(scrapy.Spider):
     name = "biosamples-pagination"
@@ -28,4 +30,5 @@ class BiosamplesPaginationSpider(scrapy.Spider):
         jsonld = jslde.extract(response.body)
         item = BioschemasScraperItem()
         item['jsonld'] = jsonld
+        logger.info("Sample Extracted - %s", response.url)
         yield item

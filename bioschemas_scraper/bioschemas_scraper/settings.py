@@ -24,11 +24,12 @@ MONGODB_PORT = 27017
 MONGODB_DB = "ebi_biosamples"
 MONGODB_COLLECTION = "samples"
 
-# Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
+
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -38,11 +39,14 @@ ROBOTSTXT_OBEY = True
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
 
+
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
 
+
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
+
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
@@ -50,11 +54,13 @@ ROBOTSTXT_OBEY = True
 #   'Accept-Language': 'en',
 #}
 
+
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
 #    'bioschemas_scraper.middlewares.BioschemasScraperSpiderMiddleware': 543,
 #}
+
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
@@ -62,17 +68,20 @@ ROBOTSTXT_OBEY = True
 #    'bioschemas_scraper.middlewares.BioschemasScraperDownloaderMiddleware': 543,
 #}
 
+
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
 
+
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
 #    'bioschemas_scraper.pipelines.BioschemasScraperPipeline': 300,
 #}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -87,6 +96,7 @@ ROBOTSTXT_OBEY = True
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
+
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
 # HTTPCACHE_ENABLED = True 
@@ -94,3 +104,9 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+#LOG SETTING BLOCK
+LOG_LEVEL = 'INFO' 			#   'CRITICAL' > 'ERROR' > 'WARNING' > 'INFO' > 'DEBUG'
+# LOG_FILE = 'log/log'
+# LOG_ENABLED = True

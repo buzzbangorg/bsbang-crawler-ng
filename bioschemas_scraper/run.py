@@ -1,3 +1,3 @@
 from scrapy import cmdline
 
-cmdline.execute("scrapy crawl biosamples-pagination".split())
+cmdline.execute("scrapy crawl biosamples-sitemap".split())

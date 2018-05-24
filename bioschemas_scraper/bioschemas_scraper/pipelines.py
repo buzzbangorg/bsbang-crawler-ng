@@ -9,6 +9,8 @@ import pymongo
 from scrapy.conf import settings
 from scrapy.exceptions import DropItem
 import logging
+import canonicaljson
+import hashlib
 
 logger = logging.getLogger('pipelinelogger')
 
@@ -32,6 +34,7 @@ class MongoDBPipeline(object):
             if not data:
                 raise DropItem("Missing data!")
 
-        self.collection.update({'jsonld': item['jsonld']}, dict(item), upsert=True)
+        _id = hashlib.sha256(canonicaljson.encode_canonical_json(item['jsonld'])).hexdigest()
+        self.collection.update({'_id':_id}, item['jsonld'], upsert=True)
         logger.info("Sample added to MongoDB database!")
         return item

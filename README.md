@@ -8,22 +8,21 @@ Schema.org defines common generic types like events and datasets which can be us
 Buzzbang is an alpha project to start crawling this data so that it can then be searched in the companion frontend project. 
 
 ## Getting Started
-Create a vitual environment and clone this repo
+Create a vitual environment and clone this repo, before installing the dependencies
 ```
 virtualenv buzzbang
 source buzzbang/bin/activate
 git clone https://github.com/buzzbangorg/bsbang-crawler-ng.git
 cd bsbang-crawler-ng
-```
-## Prerequisites
-```
 pip install -r requirements.txt
 ```
+
 ## Usage
 Step 1: Crawl the relevant website using a sitemap and store the data in a mongoDB daabase
 ```
 python bioschemas_scraper/run.py
 ```
+
 ## Running the tests
 TBD
 

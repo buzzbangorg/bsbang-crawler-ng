@@ -20,7 +20,8 @@ pip install -r requirements.txt
 ## Usage
 Step 1: Crawl the relevant website using a sitemap and store the data in a mongoDB daabase
 ```
-python bioschemas_scraper/run.py
+cd bioschemas_scraper
+python run.py
 ```
 
 ## Running the tests

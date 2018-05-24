@@ -8,7 +8,7 @@ Schema.org defines common generic types like events and datasets which can be us
 Buzzbang is an alpha project to start crawling this data so that it can then be searched in the companion frontend project. 
 
 ## Getting Started
-Create a vitual environment and clone this repo, before installing the dependencies
+Create a virtual environment and clone this repo, before installing the dependencies
 ```
 virtualenv buzzbang
 source buzzbang/bin/activate

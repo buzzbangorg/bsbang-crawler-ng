@@ -13,26 +13,32 @@ Buzzbang is an alpha project to start crawling this data so that it can then be 
 **Step 1: Create a virtual environment and clone this repo**
 
 ```
-virtualenv buzzbang
+pip3 install virtualenv
+python3 -m virtualenv buzzbang
 source buzzbang/bin/activate
 git clone https://github.com/buzzbangorg/bsbang-crawler-ng.git
 cd bsbang-crawler-ng
 ```
 
 **Step 2: Install Python dependencies**
+
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 **Step 3: Install MongoDB if necessary**
 
+You may follow this [blog](https://hevodata.com/blog/install-mongodb-on-ubuntu/) to install MongoDB on your system. 
+
+
 Then set `MONGO_DB` and `MONGO_PORT` in `settings.py` if necessary. 
 
 ## Usage
-Step 1: Crawl the sitemap of the website and store the data in a mongoDB database
+**Step 1: Crawl the sitemap of the website and store the data in a mongoDB database
+
 ```
 cd bioschemas_scraper
-python run.py
+python3 run.py
 ```
 
 TODO: Implementation and documentation of inserting this data into Solr.

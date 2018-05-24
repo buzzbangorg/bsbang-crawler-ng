@@ -19,7 +19,7 @@ cd bsbang-crawler-ng
 ```
 pip install -r requirements.txt
 ```
-## Installation
+## Usage
 Step 1: Crawl the relevant website using a sitemap and store the data in a mongoDB daabase
 ```
 python bioschemas_scraper/run.py

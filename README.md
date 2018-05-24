@@ -12,7 +12,7 @@ Create a vitual environment and clone this repo
 ```
 virtualenv buzzbang
 source buzzbang/bin/activate
-git clone https://github.com/justinccdev/bsbang-crawler-ng.git
+git clone https://github.com/buzzbangorg/bsbang-crawler-ng.git
 cd bsbang-crawler-ng
 ```
 ## Prerequisites

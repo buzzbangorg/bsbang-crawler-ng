@@ -25,6 +25,7 @@ pip install -r requirements.txt
 ```
 
 **Step 3: Install MongoDB if necessary**
+
 Then set `MONGO_DB` and `MONGO_PORT` in `settings.py` if necessary. 
 
 ## Usage

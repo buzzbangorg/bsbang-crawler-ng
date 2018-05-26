@@ -5,16 +5,16 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-import pymongo
-from scrapy.conf import settings
-from scrapy.exceptions import DropItem
 import logging
-import canonicaljson
 import hashlib
+import canonicaljson
+from bioschemas_scraper.custom import connect_db 
+from scrapy.exceptions import DropItem
 
 
 logger = logging.getLogger('mongodb-logger')
 
+collection = connect_db()
 
 class BioschemasScraperPipeline(object):
     def process_item(self, item, spider):
@@ -23,13 +23,7 @@ class BioschemasScraperPipeline(object):
 
 class MongoDBPipeline(object):
     def __init__(self):
-        client = pymongo.MongoClient(
-            settings['MONGODB_SERVER'],
-            settings['MONGODB_PORT']
-        )
-        logger.info("Connected to MongoDB")
-        db = client[settings['MONGODB_DB']]
-        self.collection = db[settings['MONGODB_COLLECTION']]
+        self.collection = collection
 
     def process_item(self, item, spider):
         for data in item:

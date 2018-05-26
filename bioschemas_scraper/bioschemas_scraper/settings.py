@@ -42,9 +42,9 @@ AUTOTHROTTLE_DEBUG = False  # Enable it only if you want to see the live status
 #SPIDER_MIDDLEWARES = {
 #    'bioschemas_scraper.middlewares.BioschemasScraperSpiderMiddleware': 543,
 #}
-#DOWNLOADER_MIDDLEWARES = {
-#    'bioschemas_scraper.middlewares.BioschemasScraperDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'bioschemas_scraper.middlewares.BioschemasScraperDownloaderMiddleware': 543,
+}
 
 #### Cache Setting - Do not enable it until you are debugging the code
 #HTTPCACHE_ENABLED = True 

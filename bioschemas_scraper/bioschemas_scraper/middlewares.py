@@ -72,6 +72,13 @@ class BioschemasScraperDownloaderMiddleware(object):
         # Called for each request that goes through the downloader
         # middleware.
 
+        if 'redirect_urls' in request.meta: 
+            spider.logger.info("Redirected to  - %s", request.meta.get('redirect_urls'))
+        else:
+            spider.logger.info("URL requested - %s", request.url)
+            
+        # spider.logger.info(request.meta)
+
         # Must either:
         # - return None: continue processing this request
         # - or return a Response object
@@ -82,6 +89,8 @@ class BioschemasScraperDownloaderMiddleware(object):
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
+
+        spider.logger.info("Crawled - %s - %s", response.status, response.url)
 
         # Must either;
         # - return a Response object
@@ -100,4 +109,4 @@ class BioschemasScraperDownloaderMiddleware(object):
         pass
 
     def spider_opened(self, spider):
-spider.logger.info('Spider opened: %s' % spider.name)
+        spider.logger.info('Spider opened: %s' % spider.name)

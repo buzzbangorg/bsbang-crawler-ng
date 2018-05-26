@@ -6,7 +6,7 @@ from scrapy.spiders import SitemapSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from bioschemas_scraper.items import BioschemasScraperItem
 
-logger = logging.getLogger('sitemaplogger')
+logger = logging.getLogger('sitemap-logger')
 
 class BiosamplesSitemapSpider(SitemapSpider):
     name = 'biosamples-sitemap'

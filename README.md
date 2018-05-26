@@ -34,7 +34,7 @@ You may follow this [blog](https://hevodata.com/blog/install-mongodb-on-ubuntu/)
 Then set `MONGO_DB` and `MONGO_PORT` in `settings.py` if necessary. 
 
 ## Usage
-**Step 1: Crawl the sitemap of the website and store the data in a mongoDB database
+**Step 1: Crawl the sitemap of the website and store the data in a mongoDB database**
 
 ```
 cd bioschemas_scraper

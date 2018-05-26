@@ -39,9 +39,9 @@ AUTOTHROTTLE_DEBUG = False  # Enable it only if you want to see the live status
 # CONCURRENT_REQUESTS_PER_DOMAIN = 
 # CONCURRENT_REQUESTS_PER_IP = 
 
-#SPIDER_MIDDLEWARES = {
+# SPIDER_MIDDLEWARES = {
 #    'bioschemas_scraper.middlewares.BioschemasScraperSpiderMiddleware': 543,
-#}
+# }
 DOWNLOADER_MIDDLEWARES = {
    'bioschemas_scraper.middlewares.BioschemasScraperDownloaderMiddleware': 543,
 }

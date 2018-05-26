@@ -1,22 +1,30 @@
-import json
 import scrapy
 import logging
+import requests
+from lxml import etree
+from scrapy.crawler import CrawlerProcess
 from extruct.jsonld import JsonLdExtractor  
-from scrapy.spiders import SitemapSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from bioschemas_scraper.items import BioschemasScraperItem
+from scrapy.spiders import CrawlSpider, SitemapSpider, Rule
+from scrapy.contrib.linkextractors.lxmlhtml import LxmlLinkExtractor
+
 
 logger = logging.getLogger('sitemap-logger')
 
+sitemap = "https://www.ebi.ac.uk/biosamples/sitemap"
+urls = dict()
+
+response = requests.get(sitemap)
+sitemap_xml = etree.fromstring(response.content)
+for urlset in sitemap_xml:
+    children = urlset.getchildren()
+    urls[children[0].text] = 0
+
 class BiosamplesSitemapSpider(SitemapSpider):
     name = 'biosamples-sitemap'
-    # sitemap_urls = ['https://www.ebi.ac.uk/biosamples/sitemap']
-    sitemap_urls = ['https://www.ebi.ac.uk/biosamples/sitemap']
-    
-    rules = (
-    Rule(LinkExtractor(allow=('1/', ), ), callback='parse_crawl', follow=True),
-  			)
-
+    allowed_domains = ["ebi.ac.uk"]
+    sitemap_urls = [sitemap]
     def parse(self, response):
         jslde = JsonLdExtractor()
         jsonld = jslde.extract(response.body)

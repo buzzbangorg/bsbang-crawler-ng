@@ -76,7 +76,7 @@ class BioschemasScraperDownloaderMiddleware(object):
             spider.logger.info("Redirected to  - %s", request.meta.get('redirect_urls'))
         else:
             spider.logger.info("URL requested - %s", request.url)
-            
+
         # spider.logger.info(request.meta)
 
         # Must either:

@@ -12,7 +12,9 @@ import logging
 import canonicaljson
 import hashlib
 
+
 logger = logging.getLogger('mongodb-logger')
+
 
 class BioschemasScraperPipeline(object):
     def process_item(self, item, spider):

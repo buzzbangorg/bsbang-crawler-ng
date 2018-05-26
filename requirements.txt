@@ -2,3 +2,4 @@ canonicaljson
 scrapy
 extruct
 pymongo
+lxml

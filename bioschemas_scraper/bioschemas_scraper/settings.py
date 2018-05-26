@@ -3,14 +3,6 @@
 SPIDER_MODULES = ['bioschemas_scraper.spiders']
 NEWSPIDER_MODULE = 'bioschemas_scraper.spiders'
 
-ITEM_PIPELINES = {'bioschemas_scraper.pipelines.MongoDBPipeline': 300}
-
-#### MongoDB Settings
-MONGODB_SERVER = "localhost"
-MONGODB_PORT = 27017
-MONGODB_DB = "ebi_biosamples"
-MONGODB_COLLECTION = "samples"
-
 #### Crawl responsibly by identifying yourself (and your website) on the user-agent
 ROBOTSTXT_OBEY = True
 BOT_NAME = 'bioschemas_scraper'
@@ -24,6 +16,13 @@ LOG_LEVEL = 'INFO' 			#   'CRITICAL' > 'ERROR' > 'WARNING' > 'INFO' > 'DEBUG'
 #### Disable Cookies
 COOKIES_ENABLED = False
 RETRY_ENABLED = True 
+
+#### MongoDB Settings
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "ebi_biosamples"
+MONGODB_COLLECTION = "samples"
+
 
 #### Autothrottle Setting Block
 AUTOTHROTTLE_ENABLED = True 
@@ -42,8 +41,13 @@ AUTOTHROTTLE_DEBUG = False  # Enable it only if you want to see the live status
 # SPIDER_MIDDLEWARES = {
 #    'bioschemas_scraper.middlewares.BioschemasScraperSpiderMiddleware': 543,
 # }
+
 DOWNLOADER_MIDDLEWARES = {
    'bioschemas_scraper.middlewares.BioschemasScraperDownloaderMiddleware': 543,
+}
+
+ITEM_PIPELINES = {
+	'bioschemas_scraper.pipelines.MongoDBPipeline': 300
 }
 
 #### Cache Setting - Do not enable it until you are debugging the code

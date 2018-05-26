@@ -2,6 +2,7 @@ import scrapy
 import logging
 import requests
 from lxml import etree
+from urllib.parse import urlsplit
 from scrapy.crawler import CrawlerProcess
 from extruct.jsonld import JsonLdExtractor  
 from scrapy.linkextractors import LinkExtractor
@@ -19,7 +20,9 @@ response = requests.get(sitemap)
 sitemap_xml = etree.fromstring(response.content)
 for urlset in sitemap_xml:
     children = urlset.getchildren()
-    urls[children[0].text] = 0
+    split_url = urlsplit(children[0].text)
+    edited_url = split_url.netloc + split_url.path + split_url.query + split_url.fragment
+    urls[edited_url] = 0
 
 class BiosamplesSitemapSpider(SitemapSpider):
     name = 'biosamples-sitemap'

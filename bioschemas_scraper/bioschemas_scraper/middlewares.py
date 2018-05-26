@@ -6,6 +6,8 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from urllib.parse import urlsplit
+from bioschemas_scraper.spiders.sitemap import urls
 
 
 class BioschemasScraperSpiderMiddleware(object):
@@ -90,7 +92,14 @@ class BioschemasScraperDownloaderMiddleware(object):
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
 
+        split_url = urlsplit(response.url)
+        edited_url = split_url.netloc + split_url.path + split_url.query + split_url.fragment
         spider.logger.info("Crawled - %s - %s", response.status, response.url)
+        spider.logger.info(edited_url)
+        if edited_url in urls:
+            urls[edited_url] = 1
+            spider.logger.info("Crawling %d of %d pages", sum(urls.values()), len(urls))
+            spider.logger.info("*****************************************************")
 
         # Must either;
         # - return a Response object

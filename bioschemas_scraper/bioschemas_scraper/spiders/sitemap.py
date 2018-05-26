@@ -2,8 +2,8 @@ import scrapy
 import logging
 import requests
 from lxml import etree
-from urllib.parse import urlsplit
 from extruct.jsonld import JsonLdExtractor  
+from bioschemas_scraper.custom import remove_url_schema 
 from bioschemas_scraper.items import BioschemasScraperItem
 from scrapy.spiders import SitemapSpider
 
@@ -17,8 +17,7 @@ response = requests.get(sitemap)
 sitemap_xml = etree.fromstring(response.content)
 for urlset in sitemap_xml:
     children = urlset.getchildren()
-    split_url = urlsplit(children[0].text)
-    edited_url = split_url.netloc + split_url.path + split_url.query + split_url.fragment
+    edited_url = remove_url_schema(children[0].text)
     urls[edited_url] = 0
 
 

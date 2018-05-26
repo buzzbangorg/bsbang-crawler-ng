@@ -6,7 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-from urllib.parse import urlsplit
+from bioschemas_scraper.custom import remove_url_schema 
 from bioschemas_scraper.spiders.sitemap import urls
 
 
@@ -91,10 +91,14 @@ class BioschemasScraperDownloaderMiddleware(object):
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
-
-        split_url = urlsplit(response.url)
-        edited_url = split_url.netloc + split_url.path + split_url.query + split_url.fragment
         spider.logger.info("Crawled - %s - %s", response.status, response.url)
+        
+        # spider.logger.info("#####################################################")
+        # spider.logger.info(response.body)
+        # spider.logger.info("#####################################################")
+        # db.samples.find( { "mainEntity.url": "https://www.ebi.ac.uk/biosamples/sample/SAMEA2489433" } )
+
+        edited_url = remove_url_schema(response.url)
         spider.logger.info(edited_url)
         if edited_url in urls:
             urls[edited_url] = 1
@@ -119,4 +123,3 @@ class BioschemasScraperDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
-        

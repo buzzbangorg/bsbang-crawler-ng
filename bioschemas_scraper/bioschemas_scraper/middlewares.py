@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from bioschemas_scraper.pipelines import collection
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema

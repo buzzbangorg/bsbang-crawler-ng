@@ -8,7 +8,7 @@ from bioschemas_scraper.items import BioschemasScraperItem
 from scrapy.spiders import SitemapSpider
 
 
-logger = logging.getLogger('sitemap-logger')
+logger = logging.getLogger('extract')
 
 
 sitemap = "https://www.ebi.ac.uk/biosamples/sitemap"
@@ -22,7 +22,7 @@ for urlset in sitemap_xml:
 
 
 class BiosamplesSitemapSpider(SitemapSpider):
-    name = 'biosamples-sitemap'
+    name = 'sitemap'
     allowed_domains = ["ebi.ac.uk"]
     sitemap_urls = [sitemap]
     def parse(self, response):

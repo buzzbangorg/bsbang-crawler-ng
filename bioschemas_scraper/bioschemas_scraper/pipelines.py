@@ -12,7 +12,7 @@ from bioschemas_scraper.custom import connect_db
 from scrapy.exceptions import DropItem
 
 
-logger = logging.getLogger('mongodb-logger')
+logger = logging.getLogger('mongodb')
 
 collection = connect_db()
 

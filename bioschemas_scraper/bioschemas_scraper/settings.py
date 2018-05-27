@@ -43,7 +43,7 @@ AUTOTHROTTLE_DEBUG = False  # Enable it only if you want to see the live status
 # }
 
 DOWNLOADER_MIDDLEWARES = {
-   'bioschemas_scraper.middlewares.BioschemasScraperDownloaderMiddleware': 543,
+   'bioschemas_scraper.middlewares.LogCrawlingMiddleware': 300,
 }
 
 ITEM_PIPELINES = {

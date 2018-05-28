@@ -46,5 +46,5 @@ LOG_LEVEL = 'INFO' 			#   'CRITICAL' > 'ERROR' > 'WARNING' > 'INFO' > 'DEBUG'
 #### MongoDB Settings
 MONGODB_SERVER = "localhost"
 MONGODB_PORT = 27017
-MONGODB_DB = "ebi_biosamples"
-MONGODB_COLLECTION = "samples"
+MONGODB_DB = "bioschemas_db"
+MONGODB_COLLECTION = "jsonlds"

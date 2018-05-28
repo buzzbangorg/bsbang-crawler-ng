@@ -3,3 +3,4 @@ scrapy
 extruct
 pymongo
 lxml
+requests

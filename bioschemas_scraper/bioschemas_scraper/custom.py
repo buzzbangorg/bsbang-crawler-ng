@@ -21,4 +21,3 @@ def connect_db():
     db = client[settings['MONGODB_DB']]
     collection = db[settings['MONGODB_COLLECTION']]
     return collection
-

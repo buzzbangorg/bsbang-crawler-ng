@@ -29,7 +29,7 @@ class BiosamplesSitemapSpider(SitemapSpider):
         jsonld = jslde.extract(response.body)
         if len(jsonld) == 0:
             logger.info("No bioschemas at this URL - %s", response.url)
-            yield None
+            yield
         else: 
             item = BioschemasScraperItem()
             jsonld[0]['buzz_url'] = remove_url_schema(response.url)

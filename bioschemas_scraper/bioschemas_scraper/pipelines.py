@@ -20,10 +20,6 @@ class MongoDBPipeline(object):
         self.collection = connect_db()
 
     def process_item(self, item, spider):
-        for data in item:
-            if not data:
-                raise DropItem("Missing data!")
-        
         _id = hashlib.sha256(canonicaljson.encode_canonical_json(item['jsonld'])).hexdigest()
         self.collection.update({'_id':_id}, item['jsonld'], upsert=True)
         logger.info("Sample added to MongoDB database!")

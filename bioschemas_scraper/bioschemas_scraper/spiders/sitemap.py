@@ -5,6 +5,7 @@ from extruct.jsonld import JsonLdExtractor
 from bioschemas_scraper.custom import remove_url_schema, get_domain, get_sitemap_url
 from bioschemas_scraper.items import BioschemasScraperItem
 from scrapy.spiders import SitemapSpider
+from scrapy.exceptions import DropItem
 
 
 logger = logging.getLogger('extract')
@@ -28,9 +29,9 @@ class BiosamplesSitemapSpider(SitemapSpider):
         jslde = JsonLdExtractor()
         jsonld = jslde.extract(response.body)
         if len(jsonld) == 0:
-            logger.info("No bioschemas at this URL - %s", response.url)
-            yield
-        else: 
+            logger.warning("No bioschemas at this URL - %s", response.url)
+            yield None
+        else:
             item = BioschemasScraperItem()
             jsonld[0]['buzz_url'] = remove_url_schema(response.url)
             item['jsonld'] = jsonld[0]

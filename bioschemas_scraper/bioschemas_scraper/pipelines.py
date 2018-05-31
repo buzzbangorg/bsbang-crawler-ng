@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import logging
 import hashlib
 import canonicaljson
-from bioschemas_scraper.custom import connect_db 
+import logging
 from scrapy.exceptions import DropItem
+from bioschemas_scraper.custom import connect_db 
 
 
 logger = logging.getLogger('mongodb')

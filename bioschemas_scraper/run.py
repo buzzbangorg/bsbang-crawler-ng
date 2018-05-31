@@ -12,7 +12,6 @@ for section_name in parser.sections():
         setting = str()
         for name, value in  parser.items(section_name):
             setting = setting + str('--set=') + str(name) + '=' + str(value) + str(' ')
-        
         settings = settings + setting
 
 execute = "scrapy crawl " + settings +  "sitemap"

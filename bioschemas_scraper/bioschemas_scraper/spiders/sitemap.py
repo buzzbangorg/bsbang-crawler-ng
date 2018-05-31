@@ -3,7 +3,7 @@ import logging
 import requests
 from lxml import etree
 from extruct.jsonld import JsonLdExtractor  
-from bioschemas_scraper.custom import remove_url_schema 
+from bioschemas_scraper.custom import remove_url_schema, get_domain, get_sitemap_url
 from bioschemas_scraper.items import BioschemasScraperItem
 from scrapy.spiders import SitemapSpider
 
@@ -11,7 +11,7 @@ from scrapy.spiders import SitemapSpider
 logger = logging.getLogger('extract')
 
 
-sitemap = "https://www.ebi.ac.uk/biosamples/sitemap"
+sitemap = get_sitemap_url()
 urls = dict()
 response = requests.get(sitemap)
 sitemap_xml = etree.fromstring(response.content)
@@ -23,7 +23,7 @@ for urlset in sitemap_xml:
 
 class BiosamplesSitemapSpider(SitemapSpider):
     name = 'sitemap'
-    allowed_domains = ["ebi.ac.uk"]
+    allowed_domains = [get_domain(sitemap)]
     sitemap_urls = [sitemap]
     def parse(self, response):
         jslde = JsonLdExtractor()

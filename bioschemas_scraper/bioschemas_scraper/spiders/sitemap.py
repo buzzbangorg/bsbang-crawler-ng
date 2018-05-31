@@ -29,6 +29,7 @@ class BiosamplesSitemapSpider(SitemapSpider):
         jslde = JsonLdExtractor()
         jsonld = jslde.extract(response.body)
         item = BioschemasScraperItem()
+        jsonld[0]['buzz_url'] = remove_url_schema(response.url)
         item['jsonld'] = jsonld[0]
         logger.info("Sample Extracted - %s", response.url)
         yield item

@@ -12,7 +12,7 @@ RETRY_ENABLED = True
 
 ### Middlewares and Pipelines
 DOWNLOADER_MIDDLEWARES = {
-   'bioschemas_scraper.middlewares.LogCrawlingMiddleware': 300,
+   'bioschemas_scraper.middlewares.ScrapingMiddleware': 300,
 }
 ITEM_PIPELINES = {
 	'bioschemas_scraper.pipelines.MongoDBPipeline': 300

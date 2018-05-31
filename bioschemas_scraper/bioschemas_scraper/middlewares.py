@@ -1,14 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from bioschemas_scraper.pipelines import collection
+from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema
+from bioschemas_scraper.custom import connect_db 
 from scrapy.downloadermiddlewares.redirect import BaseRedirectMiddleware
 
 
-class LogCrawlingMiddleware(BaseRedirectMiddleware):
+collection = connect_db()
+
+
+class ScrapingMiddleware(BaseRedirectMiddleware):
     def process_request(self, request, spider):
-        spider.logger.info("URL requested - %s", request.url)
+        x = collection.find_one({'buzz_url': remove_url_schema(request.url)})
+        if x is not None:
+            spider.logger.info("URL already scraped - %s", request.url)
+            raise IgnoreRequest()
+        else:
+            spider.logger.info("URL requested - %s", request.url)
+            return None
 
     def process_response(self, request, response, spider):
         spider.logger.info("Crawled - %s - %s", response.status, response.url)        

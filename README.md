@@ -31,15 +31,15 @@ pip3 install -r requirements.txt
 You may follow this [blog](https://hevodata.com/blog/install-mongodb-on-ubuntu/) to install MongoDB on your system. 
 
 
-Setup the MongoDB server using MongoDBServer settings in conf/setings.ini file.
-Start and check if the MongoDB server is up using the command is another terminal - 
+Setup the MongoDB server using MongoDBServer settings in the conf/settings.ini file.
+Start and check if the MongoDB server is up using the following commands in another terminal - 
 ```
 service mongodb start
 service mongodb status
 ``` 
 
 ## Usage
-**Step 1: Crawl the sitemap of the website and store the data in a mongoDB database**
+**Step 1: Crawl the sitemap of the website and store the data in a MongoDB database**
 
 ```
 cd bioschemas_scraper

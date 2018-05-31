@@ -1,4 +1,3 @@
-import scrapy
 import logging
 import requests
 from lxml import etree
@@ -28,9 +27,12 @@ class BiosamplesSitemapSpider(SitemapSpider):
     def parse(self, response):
         jslde = JsonLdExtractor()
         jsonld = jslde.extract(response.body)
-        item = BioschemasScraperItem()
-        jsonld[0]['buzz_url'] = remove_url_schema(response.url)
-        item['jsonld'] = jsonld[0]
-        logger.info("Sample Extracted - %s", response.url)
-        yield item
-        
+        if len(jsonld) == 0:
+            logger.info("No bioschemas at this URL - %s", response.url)
+            yield None
+        else: 
+            item = BioschemasScraperItem()
+            jsonld[0]['buzz_url'] = remove_url_schema(response.url)
+            item['jsonld'] = jsonld[0]
+            logger.info("Sample Extracted - %s", response.url)
+            yield item

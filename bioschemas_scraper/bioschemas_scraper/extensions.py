@@ -4,14 +4,18 @@ from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from bioschemas_scraper.custom import connect_db
 
+
 logger = logging.getLogger('statcol')
+
 
 class StatsCollector(object):
 
     def __init__(self, stats):
         self.stats = stats
         self.initial_db_size = 0
+        self.final_db_size = 0
         self.items_scraped = 0
+        self.collection = connect_db()
         self.item_count = settings['EXT_ITEMCOUNT']
 
     @classmethod
@@ -33,12 +37,13 @@ class StatsCollector(object):
         return ext
 
     def spider_opened(self, spider):
-        collection = connect_db()
-        self.initial_db_size = collection.count() 
+        self.initial_db_size = self.collection.count()
         logger.info("%d documents already present in the DB", self.initial_db_size)
         logger.info("opened spider %s", spider.name)
 
     def spider_closed(self, spider):
+        self.final_db_size = self.collection.count()
+        logger.info("%d documents present in the DB after crawl", self.final_db_size)
         logger.info(self.stats.get_stats())
         logger.info("closed spider %s", spider.name)
 

@@ -4,3 +4,4 @@ extruct
 pymongo
 lxml
 requests
+pandas

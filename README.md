@@ -39,12 +39,16 @@ service mongodb status
 ``` 
 
 ## Usage
-**Step 1: Crawl the sitemap of the website and store the data in a MongoDB database**
+**Step 1: Put initialization arguments in the config/setting.ini file**
+
+**Step 2: Crawl the sitemap of the website and store the data in a MongoDB database**
 
 ```
 cd bioschemas_scraper
 python3 run.py
 ```
+
+The scrapy stats is logged in stats/scrapy_stats.csv file. Please use this for deciding proper initializations.
 
 TODO: Implementation and documentation of inserting this data into Solr.
 

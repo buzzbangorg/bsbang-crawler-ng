@@ -6,3 +6,6 @@ __pycache__/
 
 # Scrapy stuff:
 .scrapy
+
+# stats
+stats/

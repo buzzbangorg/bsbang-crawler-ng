@@ -10,12 +10,17 @@ NEWSPIDER_MODULE = 'bioschemas_scraper.spiders'
 COOKIES_ENABLED = False
 RETRY_ENABLED = True 
 
-### Middlewares and Pipelines
+### Extensions, Middlewares & Pipelines
+EXT_ENABLED = True
+EXT_ITEMCOUNT = 10
+EXTENSIONS = {
+    'bioschemas_scraper.extensions.StatsCollector': 200,
+}
 DOWNLOADER_MIDDLEWARES = {
-   'bioschemas_scraper.middlewares.ScrapingMiddleware': 300,
+    'bioschemas_scraper.middlewares.ScrapingMiddleware': 300,
 }
 ITEM_PIPELINES = {
-	'bioschemas_scraper.pipelines.MongoDBPipeline': 300
+    'bioschemas_scraper.pipelines.MongoDBPipeline': 300,
 }
 
 #### Autothrottle Setting Block
@@ -33,7 +38,7 @@ AUTOTHROTTLE_DEBUG = False  # Enable it only if you want to see the live status
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 #### Log setting Block
-LOG_LEVEL = 'INFO' 			#   'CRITICAL' > 'ERROR' > 'WARNING' > 'INFO' > 'DEBUG'
+LOG_LEVEL = 'INFO'                     #   'CRITICAL' > 'ERROR' > 'WARNING' > 'INFO' > 'DEBUG'
 # LOG_FILE = 'log/log'
 # LOG_ENABLED = True
 

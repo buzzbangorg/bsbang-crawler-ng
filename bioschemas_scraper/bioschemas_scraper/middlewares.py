@@ -8,10 +8,10 @@ from bioschemas_scraper.custom import connect_db
 from scrapy.downloadermiddlewares.redirect import BaseRedirectMiddleware
 
 
-collection = connect_db()
-
-
 class ScrapingMiddleware(object):
+    def __init__(self):
+        self.collection = connect_db()
+
     @classmethod
     def from_crawler(cls, crawler):
         s = cls()
@@ -19,7 +19,7 @@ class ScrapingMiddleware(object):
         return s
 
     def process_request(self, request, spider):
-        x = collection.find_one({'buzz_url': remove_url_schema(request.url)})
+        x = self.collection.find_one({'buzz_url': remove_url_schema(request.url)})
         if x is not None:
             spider.logger.info("URL already scraped - %s", request.url)
             raise IgnoreRequest()

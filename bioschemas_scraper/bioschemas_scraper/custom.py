@@ -1,9 +1,12 @@
 import pymongo
 import logging
+import requests
+from lxml import etree
 from scrapy.conf import settings
 from urllib.parse import urlsplit
 from six.moves.configparser import ConfigParser
 from scrapy.exceptions import CloseSpider
+
 
 logger = logging.getLogger('custom-logger')
 
@@ -28,10 +31,6 @@ def connect_db():
     collection = db[settings['MONGODB_COLLECTION']]
     return collection
 
-def get_domain(url):
-    split_url = urlsplit(url)
-    return split_url.netloc
-    
 def get_sitemap_url():
     config_file = "../config/settings.ini"
     parser = ConfigParser()
@@ -40,6 +39,17 @@ def get_sitemap_url():
         if section_name == "Sitemaps":
             for name, value in  parser.items(section_name):
                 if name == "sitemap":
+                    logger.info("Sitemap URL - %s", value)
                     return value
     logger.error("Sitemap URL not provided")
     raise CloseSpider()
+
+def parse_sitemap(sitemap_url):
+    urls = dict()
+    response = requests.get(sitemap_url)
+    sitemap_xml = etree.fromstring(response.content)
+    for urlset in sitemap_xml:
+        children = urlset.getchildren()
+        edited_url = remove_url_schema(children[0].text)
+        urls[edited_url] = 0
+    return urls

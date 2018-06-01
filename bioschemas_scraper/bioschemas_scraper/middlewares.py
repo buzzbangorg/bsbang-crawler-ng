@@ -5,7 +5,6 @@ from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema
 from bioschemas_scraper.custom import connect_db 
-from scrapy.downloadermiddlewares.redirect import BaseRedirectMiddleware
 
 
 class ScrapingMiddleware(object):

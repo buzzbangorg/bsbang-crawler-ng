@@ -24,8 +24,7 @@ def connect_db():
     try:
         client.server_info()
     except pymongo.errors.ServerSelectionTimeoutError as e:
-        logging.error("Unable to connect to MongoDB - Server: %s, Port: %d", settings['MONGODB_SERVER'], settings['MONGODB_PORT'])
-        raise CloseSpider()
+        raise CloseSpider('Unable to connect to MongoDB')
     logger.info("Connected to MongoDB")
     db = client[settings['MONGODB_DB']]
     collection = db[settings['MONGODB_COLLECTION']]
@@ -41,8 +40,7 @@ def get_sitemap_url():
                 if name == "sitemap":
                     logger.info("Sitemap URL - %s", value)
                     return value
-    logger.error("Sitemap URL not provided")
-    raise CloseSpider()
+    raise CloseSpider('Sitemap URL not provided')
 
 def parse_sitemap(sitemap_url):
     urls = dict()

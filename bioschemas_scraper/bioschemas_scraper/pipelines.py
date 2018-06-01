@@ -3,7 +3,6 @@
 import hashlib
 import canonicaljson
 import logging
-from scrapy.exceptions import DropItem
 from bioschemas_scraper.custom import connect_db 
 
 

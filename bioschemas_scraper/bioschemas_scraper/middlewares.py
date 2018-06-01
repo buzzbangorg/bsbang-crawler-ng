@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from scrapy import signals
 from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema
@@ -10,7 +11,13 @@ from scrapy.downloadermiddlewares.redirect import BaseRedirectMiddleware
 collection = connect_db()
 
 
-class ScrapingMiddleware(BaseRedirectMiddleware):
+class ScrapingMiddleware(object):
+    @classmethod
+    def from_crawler(cls, crawler):
+        s = cls()
+        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        return s
+
     def process_request(self, request, spider):
         x = collection.find_one({'buzz_url': remove_url_schema(request.url)})
         if x is not None:
@@ -30,3 +37,6 @@ class ScrapingMiddleware(BaseRedirectMiddleware):
 
     def process_exception(self, request, exception, spider):
         pass
+
+    def spider_opened(self, spider):
+        spider.logger.info('Spider opened: %s' % spider.name)

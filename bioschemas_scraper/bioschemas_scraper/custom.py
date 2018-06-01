@@ -1,6 +1,8 @@
+import os
 import pymongo
 import logging
 import requests
+import pandas as pd
 from lxml import etree
 from scrapy.conf import settings
 from urllib.parse import urlsplit
@@ -51,3 +53,17 @@ def parse_sitemap(sitemap_url):
         edited_url = remove_url_schema(children[0].text)
         urls[edited_url] = 0
     return urls
+
+def generate_report(stats):
+    filepath = '../stats/scrapy_stats.csv' 
+    
+    stats['scraping time'] = stats['finish_time'] - stats['start_time']
+    df = pd.DataFrame(list(stats.items()), columns=['parameter', 'value'])
+    df.set_index('parameter', inplace=True)
+    
+    if not os.path.isfile(filepath):
+        df.to_csv(filepath)
+    else: 
+        cdf = pd.read_csv(filepath, index_col='parameter')
+        concat_df = pd.concat([df, cdf], axis=1, sort=False)
+        concat_df.to_csv(filepath)

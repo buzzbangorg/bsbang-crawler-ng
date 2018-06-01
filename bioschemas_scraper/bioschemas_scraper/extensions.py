@@ -2,7 +2,7 @@ import logging
 from scrapy import signals
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-from bioschemas_scraper.custom import connect_db
+from bioschemas_scraper.custom import connect_db, generate_report
 
 
 logger = logging.getLogger('statcol')
@@ -44,8 +44,12 @@ class StatsCollector(object):
     def spider_closed(self, spider):
         self.final_db_size = self.collection.count()
         logger.info("%d documents present in the DB after crawl", self.final_db_size)
-        logger.info(self.stats.get_stats())
         logger.info("closed spider %s", spider.name)
+        
+        final_stats = self.stats.get_stats().copy()
+        final_stats['initial_db_size'] = self.initial_db_size
+        final_stats['final_db_size'] = self.final_db_size
+        generate_report(final_stats)
 
     def item_scraped(self, item, spider):
         self.items_scraped += 1

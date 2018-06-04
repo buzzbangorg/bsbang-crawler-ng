@@ -21,7 +21,7 @@ def remove_url_schema(url):
 def connect_db():
     client = pymongo.MongoClient(
             settings['MONGODB_SERVER'],
-            settings['MONGODB_PORT']
+            int(settings['MONGODB_PORT'])
         )
     try:
         client.server_info()
@@ -38,10 +38,10 @@ def get_sitemap_url():
     parser.read(config_file)
     for section_name in parser.sections():
         if section_name == "Sitemaps":
-            for name, value in  parser.items(section_name):
+            for name, value in parser.items(section_name):
                 if name == "sitemap":
                     logger.info("Sitemap URL - %s", value)
-                    return value[1:-1]
+                    return value
     raise CloseSpider('Sitemap URL not provided')
 
 def parse_sitemap(sitemap_url):

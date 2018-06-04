@@ -76,8 +76,10 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [x] Prevent scraping items that are already scraped and kept in MongoDB
 - [x] Raise exceptions for DB conn error & sitemap url error
 - [x] Allowed user settings outside source control
+- [x] Unittests - Spider contracts 
 - [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
-- [ ] Denial of service attack - massive webpages, faithfulness of JSON-LD
+- [ ] Filter out malicious massive input webpages, 
+- [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain
 - [ ] Allow scrapy to crawl multiple domains/sitemaps 
 - [ ] Hardware benchmarking for optimal performance across various machines 
 - [ ] ........ if you have more suggestions, let's discuss at the issues section

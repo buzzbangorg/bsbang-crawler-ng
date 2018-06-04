@@ -65,5 +65,5 @@ def generate_report(stats):
         df.to_csv(filepath)
     else: 
         cdf = pd.read_csv(filepath, index_col='parameter')
-        concat_df = pd.concat([df, cdf], axis=1, sort=False)
+        concat_df = pd.concat([df, cdf], axis=1, sort=False, join='inner')
         concat_df.to_csv(filepath)

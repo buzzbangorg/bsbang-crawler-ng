@@ -16,6 +16,12 @@ class BiosamplesSitemapSpider(SitemapSpider):
     name = 'sitemap'
     sitemap_urls = [sitemap]
     def parse(self, response):
+        """
+        @url http://www.ebi.ac.uk/biosamples/samples/SAMN04581192
+        @returns items 1 1
+        @returns requests 0 0
+        @scrapes jsonld
+        """
         jslde = JsonLdExtractor()
         jsonld = jslde.extract(response.body)
         if len(jsonld) == 0:

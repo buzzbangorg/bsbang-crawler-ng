@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from scrapy.spiders import SitemapSpider
 from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema, connect_db
@@ -19,7 +19,7 @@ class ScrapingMiddleware(object):
             return None
 
     def process_response(self, request, response, spider):
-        spider.logger.info("Crawled - %s - %s", response.status, response.url)        
+        spider.logger.info("Crawled - %s - %s", response.status, response.url)
         edited_url = remove_url_schema(response.url)
         if edited_url in urls:
             urls[edited_url] = 1

@@ -24,29 +24,29 @@ ITEM_PIPELINES = {
 }
 
 #### Autothrottle Setting Block
-AUTOTHROTTLE_ENABLED = True 
-AUTOTHROTTLE_START_DELAY = 1.0
-AUTOTHROTTLE_MAX_DELAY = 20.0
-AUTOTHROTTLE_TARGET_CONCURRENCY = 40.0 
-AUTOTHROTTLE_DEBUG = False  # Enable it only if you want to see the live status
+# AUTOTHROTTLE_ENABLED = True 
+# AUTOTHROTTLE_START_DELAY = 1.0
+# AUTOTHROTTLE_MAX_DELAY = 20.0
+# AUTOTHROTTLE_TARGET_CONCURRENCY = 40.0 
+# AUTOTHROTTLE_DEBUG = False  # Enable it only if you want to see the live status
 # DOWNLOAD_DELAY = 
 
 #### Cache Setting - Do not enable it until you are debugging the code
-#HTTPCACHE_ENABLED = True 
-#HTTPCACHE_EXPIRATION_SECS = 0
-#HTTPCACHE_DIR = 'httpcache'
-#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# HTTPCACHE_ENABLED = True 
+# HTTPCACHE_EXPIRATION_SECS = 0
+# HTTPCACHE_DIR = 'httpcache'
+# HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 #### Log setting Block
 LOG_LEVEL = 'INFO'                     #   'CRITICAL' > 'ERROR' > 'WARNING' > 'INFO' > 'DEBUG'
 # LOG_FILE = 'log/log'
 # LOG_ENABLED = True
+MEMDEBUG_ENABLED = True
 
 #### Concurrency Settings - To be tested
-# CONCURRENT_ITEMS = 
-# CONCURRENT_REQUESTS = 
-# CONCURRENT_REQUESTS_PER_DOMAIN = 
-# CONCURRENT_REQUESTS_PER_IP = 
+CONCURRENT_REQUESTS = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 500
+# CONCURRENT_REQUESTS_PER_IP =			# Ignore this 
 
 #### MongoDB Settings
 MONGODB_SERVER = "localhost"

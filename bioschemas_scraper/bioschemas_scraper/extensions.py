@@ -49,6 +49,8 @@ class StatsCollector(object):
         final_stats = self.stats.get_stats().copy()
         final_stats['initial_db_size'] = self.initial_db_size
         final_stats['final_db_size'] = self.final_db_size
+        final_stats['CONCURRENT_REQUESTS'] = settings['CONCURRENT_REQUESTS']
+        final_stats['CONCURRENT_REQUESTS_PER_DOMAIN'] = settings['CONCURRENT_REQUESTS_PER_DOMAIN']
         generate_report(final_stats)
 
     def item_scraped(self, item, spider):

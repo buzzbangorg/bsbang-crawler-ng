@@ -41,7 +41,7 @@ def get_sitemap_url():
             for name, value in  parser.items(section_name):
                 if name == "sitemap":
                     logger.info("Sitemap URL - %s", value)
-                    return value
+                    return value[1:-1]
     raise CloseSpider('Sitemap URL not provided')
 
 def parse_sitemap(sitemap_url):

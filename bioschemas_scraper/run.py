@@ -15,4 +15,5 @@ for section_name in parser.sections():
         settings = settings + setting
 
 execute = "scrapy crawl " + settings +  "sitemap"
+print(execute)
 cmdline.execute(execute.split())

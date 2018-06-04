@@ -3,6 +3,7 @@
 import hashlib
 import canonicaljson
 import logging
+from scrapy.conf import settings
 from bioschemas_scraper.custom import connect_db 
 
 
@@ -16,7 +17,9 @@ class BioschemasScraperPipeline(object):
 
 class MongoDBPipeline(object):
     def __init__(self):
-        self.collection = connect_db()
+        client = connect_db()
+        db = client[settings['MONGODB_DB']]
+        self.collection = db[settings['MONGODB_COLLECTION']]
 
     def process_item(self, item, spider):
         _id = hashlib.sha256(canonicaljson.encode_canonical_json(item['jsonld'])).hexdigest()

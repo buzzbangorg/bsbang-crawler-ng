@@ -53,3 +53,6 @@ MONGODB_SERVER = "localhost"
 MONGODB_PORT = 27017
 MONGODB_DB = "bioschemas_db"
 MONGODB_COLLECTION = "jsonlds"
+
+#### Optimization Settings
+OPTIMIZER_STATUS = False

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from scrapy.conf import settings
 from scrapy.spiders import SitemapSpider
 from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
@@ -7,7 +8,9 @@ from bioschemas_scraper.custom import remove_url_schema, connect_db
 
 class ScrapingMiddleware(object):
     def __init__(self):
-        self.collection = connect_db()
+        client = connect_db()
+        db = client[settings['MONGODB_DB']]
+        self.collection = db[settings['MONGODB_COLLECTION']]
 
     def process_request(self, request, spider):
         x = self.collection.find_one({'buzz_url': remove_url_schema(request.url)})

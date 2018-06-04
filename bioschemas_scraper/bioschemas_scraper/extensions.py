@@ -2,7 +2,7 @@ import logging
 from scrapy import signals
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-from bioschemas_scraper.custom import connect_db, generate_report
+from bioschemas_scraper.custom import connect_db, generate_report, drop_db
 
 
 logger = logging.getLogger('statcol')
@@ -15,8 +15,11 @@ class StatsCollector(object):
         self.initial_db_size = 0
         self.final_db_size = 0
         self.items_scraped = 0
-        self.collection = connect_db()
         self.item_count = settings['EXT_ITEMCOUNT']
+
+        client = connect_db()
+        db = client[settings['MONGODB_DB']]
+        self.collection = db[settings['MONGODB_COLLECTION']]
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -45,6 +48,9 @@ class StatsCollector(object):
         self.final_db_size = self.collection.count()
         logger.info("%d documents present in the DB after crawl", self.final_db_size)
         logger.info("closed spider %s", spider.name)
+
+        if bool(settings['OPTIMIZER_STATUS']) is True:
+            drop_db(settings['MONGODB_DB'])
         
         final_stats = self.stats.get_stats().copy()
         final_stats['initial_db_size'] = self.initial_db_size

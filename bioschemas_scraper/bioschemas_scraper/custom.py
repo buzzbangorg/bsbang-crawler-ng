@@ -28,9 +28,19 @@ def connect_db():
     except pymongo.errors.ServerSelectionTimeoutError as e:
         raise CloseSpider('Unable to connect to MongoDB')
     logger.info("Connected to MongoDB")
-    db = client[settings['MONGODB_DB']]
-    collection = db[settings['MONGODB_COLLECTION']]
-    return collection
+    return client
+
+def drop_db(dbname):
+    client = pymongo.MongoClient(
+            settings['MONGODB_SERVER'],
+            int(settings['MONGODB_PORT'])
+        )
+    try:
+        client.server_info()
+        client.drop_database(dbname)
+        client.close()
+    except pymongo.errors.ServerSelectionTimeoutError as e:
+        raise CloseSpider('Unable to connect to MongoDB')
 
 def get_sitemap_url():
     config_file = "../config/settings.ini"

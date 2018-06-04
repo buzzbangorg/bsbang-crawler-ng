@@ -28,7 +28,7 @@ for section_name in parser.sections():
 
 if args.optimize is True:
     optimizer = {
-                'CONCURRENT_REQUESTS' : 8,
+                'CONCURRENT_REQUESTS' : 2,
                 'CLOSESPIDER_ITEMCOUNT' : 100,
                 'CONCURRENT_REQUESTS_PER_DOMAIN' : 100,
                 # "CONCURRENT_REQUESTS_PER_IP" : 100,

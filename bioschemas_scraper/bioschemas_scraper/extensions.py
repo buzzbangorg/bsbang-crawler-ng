@@ -2,7 +2,7 @@ import logging
 from scrapy import signals
 from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
-from bioschemas_scraper.custom import connect_db, generate_report, drop_db
+from bioschemas_scraper.custom import generate_report, mongo_conn
 
 
 logger = logging.getLogger('statcol')
@@ -17,8 +17,9 @@ class StatsCollector(object):
         self.items_scraped = 0
         self.item_count = settings['EXT_ITEMCOUNT']
 
-        client = connect_db()
-        db = client[settings['MONGODB_DB']]
+        conn = mongo_conn()
+        self.client = conn.connect_db()
+        db = self.client[settings['MONGODB_DB']]
         self.collection = db[settings['MONGODB_COLLECTION']]
 
     @classmethod
@@ -41,6 +42,7 @@ class StatsCollector(object):
 
     def spider_opened(self, spider):
         self.initial_db_size = self.collection.count()
+        mongo_conn
         logger.info("%d documents already present in the DB", self.initial_db_size)
         logger.info("opened spider %s", spider.name)
 

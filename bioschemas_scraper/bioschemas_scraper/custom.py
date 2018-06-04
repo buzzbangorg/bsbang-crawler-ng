@@ -13,34 +13,32 @@ from scrapy.exceptions import CloseSpider
 logger = logging.getLogger('custom-logger')
 
 
+class mongo_conn(object):
+    def __init__(self):
+        self.client = pymongo.MongoClient(
+                settings['MONGODB_SERVER'],
+                int(settings['MONGODB_PORT'])
+            )
+    def connect_db(self):
+        try:
+            self.client.server_info()
+        except pymongo.errors.ServerSelectionTimeoutError as e:
+            raise CloseSpider('Unable to connect to MongoDB')
+        logger.info("Connected to MongoDB")
+        return self.client
+    def drop_db(self, dbname):
+        try:
+            self.client.server_info()
+            self.client.drop_database(dbname)
+        except pymongo.errors.ServerSelectionTimeoutError as e:
+            raise CloseSpider('Unable to connect to MongoDB')
+    def close_db(self):
+        self.client.close()
+        
 def remove_url_schema(url):
     split_url = urlsplit(url)
     edited_url = split_url.netloc + split_url.path + split_url.query + split_url.fragment
     return edited_url
-
-def connect_db():
-    client = pymongo.MongoClient(
-            settings['MONGODB_SERVER'],
-            int(settings['MONGODB_PORT'])
-        )
-    try:
-        client.server_info()
-    except pymongo.errors.ServerSelectionTimeoutError as e:
-        raise CloseSpider('Unable to connect to MongoDB')
-    logger.info("Connected to MongoDB")
-    return client
-
-def drop_db(dbname):
-    client = pymongo.MongoClient(
-            settings['MONGODB_SERVER'],
-            int(settings['MONGODB_PORT'])
-        )
-    try:
-        client.server_info()
-        client.drop_database(dbname)
-        client.close()
-    except pymongo.errors.ServerSelectionTimeoutError as e:
-        raise CloseSpider('Unable to connect to MongoDB')
 
 def get_sitemap_url():
     config_file = "../config/settings.ini"

@@ -9,6 +9,16 @@ parser = argparse.ArgumentParser('If this is your first run on this hardware,'
 parser.add_argument('--optimize',
                     action='store_true',
                     help='If true then scraper will find optimal parameters')
+parser.add_argument('con_req',
+                    nargs='?',
+                    type=int,
+                    default=8,
+                    help='Input parameter CONCURRENT_REQUESTS, def: 8')
+parser.add_argument('con_req_dom',
+                    nargs='?',
+                    type=int,
+                    default=100,
+                    help='Input parameter CONCURRENT_REQUESTS_PER_DOMAIN, def: 100')
 args = parser.parse_args()
 
 
@@ -24,16 +34,21 @@ for section_name in parser.sections():
         for name, value in  parser.items(section_name):
             setting = setting + str('--set=') + str(name) + '=' + str(value) + str(' ')
         settings = settings + setting
-    execute = "scrapy crawl " + settings +  "sitemap"
+
+user_args = {
+            'CONCURRENT_REQUESTS' : args.con_req,
+            'CONCURRENT_REQUESTS_PER_DOMAIN' : args.con_req_dom
+}
+for parameter, value in user_args.items():
+    settings = settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
+execute = "scrapy crawl " + settings +  "sitemap"
 
 
 if args.optimize is True:
     optimizer = {
-                'CONCURRENT_REQUESTS' : 20,
+                'OPTIMIZER_STATUS' : True,
+                'MONGODB_COLLECTION' : 'test',
                 'CLOSESPIDER_ITEMCOUNT' : 200,
-                # 'CONCURRENT_REQUESTS_PER_DOMAIN' : 100,
-                # "CONCURRENT_REQUESTS_PER_IP" : 100,
-                'OPTIMIZER_STATUS' : True
     }
     added_settings = settings
     for parameter, value in optimizer.items():

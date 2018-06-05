@@ -41,14 +41,23 @@ service mongodb status
 ## Usage
 **Step 1: Put initialization arguments in the config/setting.ini file**
 
-**Step 2: Crawl the sitemap of the website and store the data in a MongoDB database**
+**Step 2: Find optimal value of parameters for your hardware**
+There are two parameters that you need to tune for faster crawling on your system - 'CONCURRENT_REQUESTS' - [4,8,16,32] and 'CONCURRENT_REQUESTS_PER_DOMAIN' - [100,500,1000]. Put different values of these parameters and view the stats report in stats/scrapy_stats.csv file. For benchmarking, we are scraping 200 items (fixed) from the sitemap and we observe the 'scraping time' in the stats file for each pair of these two parameters. The pair that minimizes this time is best for your system.
+
+Note: If you observe that increasing 'CONCURRENT_REQUESTS' is making your scraper faster, do not go about wildly increasing it. Check if the 'memusage/max' is less than or equal to 80% of CPU capacity. Beyond this, your system will choke.
 
 ```
 cd bioschemas_scraper
-python3 run.py
+python3 run.py --optimize --con-req 8 --con-req-dom 1000
 ```
 
-The scrapy stats is logged in stats/scrapy_stats.csv file. Please use this for deciding proper initializations.
+**Step 3: Crawl the sitemap and store the data in a MongoDB database**
+Supply the tuned parameters and run the script.
+
+```
+cd bioschemas_scraper
+python3 run.py  --con-req 8 --con-req-dom 1000
+```
 
 TODO: Implementation and documentation of inserting this data into Solr.
 

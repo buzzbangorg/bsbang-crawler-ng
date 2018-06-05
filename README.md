@@ -48,7 +48,7 @@ Note: If you observe that increasing 'CONCURRENT_REQUESTS' is making your scrape
 
 ```
 cd bioschemas_scraper
-python3 run.py --optimize --con-req 8 --con-req-dom 1000
+python3 run.py --optimize <CONCURRENT_REQUESTS> <CONCURRENT_REQUESTS_PER_DOMAIN>
 ```
 
 **Step 3: Crawl the sitemap and store the data in a MongoDB database**
@@ -56,7 +56,7 @@ Supply the tuned parameters and run the script.
 
 ```
 cd bioschemas_scraper
-python3 run.py  --con-req 8 --con-req-dom 1000
+python3 run.py <CONCURRENT_REQUESTS> <CONCURRENT_REQUESTS_PER_DOMAIN>
 ```
 
 TODO: Implementation and documentation of inserting this data into Solr.

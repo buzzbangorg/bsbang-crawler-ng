@@ -14,7 +14,7 @@ urls = parse_sitemap(sitemap)
 
 class BiosamplesSitemapSpider(SitemapSpider):
     name = 'sitemap'
-    sitemap_urls = [sitemap]
+    sitemap_urls = sitemap
     def parse(self, response):
         """
         @url http://www.ebi.ac.uk/biosamples/samples/SAMN04581192

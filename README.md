@@ -88,7 +88,7 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [x] Unittests - Spider contracts 
 - [x] Filter out malicious massive input webpages, 
 - [x] Hardware benchmarking for optimal performance across various machines 
-- [ ] Allow scrapy to crawl multiple domains/sitemaps 
-- [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
+- [x] Allow scrapy to crawl multiple domains/sitemaps 
 - [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain
+- [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
 - [ ] ........ if you have more suggestions, let's discuss at the issues section

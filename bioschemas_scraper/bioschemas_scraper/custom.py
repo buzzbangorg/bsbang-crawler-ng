@@ -48,20 +48,22 @@ def get_sitemap_url():
     parser.read(config_file)
     for section_name in parser.sections():
         if section_name == "Sitemaps":
+            urls = list()
             for name, value in parser.items(section_name):
-                if name == "sitemap":
-                    logger.info("Sitemap URL - %s", value)
-                    return value
+                urls.append(value)
+                logger.info("Sitemap URL - %s", value)
+            return urls
     raise CloseSpider('Sitemap URL not provided')
 
-def parse_sitemap(sitemap_url):
+def parse_sitemap(sitemap_urls):
     urls = dict()
-    response = requests.get(sitemap_url)
-    sitemap_xml = etree.fromstring(response.content)
-    for urlset in sitemap_xml:
-        children = urlset.getchildren()
-        edited_url = remove_url_schema(children[0].text)
-        urls[edited_url] = 0
+    for url in sitemap_urls:
+        response = requests.get(url)
+        sitemap_xml = etree.fromstring(response.content)
+        for urlset in sitemap_xml:
+            children = urlset.getchildren()
+            edited_url = remove_url_schema(children[0].text)
+            urls[edited_url] = 0
     return urls
 
 def generate_report(stats):

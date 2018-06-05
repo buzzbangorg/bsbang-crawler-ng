@@ -4,7 +4,7 @@ import hashlib
 import canonicaljson
 import logging
 from scrapy.conf import settings
-from bioschemas_scraper.custom import mongo_conn
+from bioschemas_scraper.custom import connect_db 
 
 
 logger = logging.getLogger('mongodb')
@@ -17,9 +17,8 @@ class BioschemasScraperPipeline(object):
 
 class MongoDBPipeline(object):
     def __init__(self):
-        conn = mongo_conn()
-        self.client = conn.connect_db()
-        db = self.client[settings['MONGODB_DB']]
+        client = connect_db()
+        db = client[settings['MONGODB_DB']]
         self.collection = db[settings['MONGODB_COLLECTION']]
 
     def process_item(self, item, spider):

@@ -3,14 +3,13 @@ from scrapy.conf import settings
 from scrapy.spiders import SitemapSpider
 from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
-from bioschemas_scraper.custom import remove_url_schema, mongo_conn
+from bioschemas_scraper.custom import remove_url_schema, connect_db
 
 
 class ScrapingMiddleware(object):
     def __init__(self):
-        conn = mongo_conn()
-        self.client = conn.connect_db()
-        db = self.client[settings['MONGODB_DB']]
+        client = connect_db()
+        db = client[settings['MONGODB_DB']]
         self.collection = db[settings['MONGODB_COLLECTION']]
 
     def process_request(self, request, spider):

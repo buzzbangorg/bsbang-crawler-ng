@@ -24,20 +24,22 @@ for section_name in parser.sections():
         for name, value in  parser.items(section_name):
             setting = setting + str('--set=') + str(name) + '=' + str(value) + str(' ')
         settings = settings + setting
+    execute = "scrapy crawl " + settings +  "sitemap"
 
 
 if args.optimize is True:
     optimizer = {
-                'CONCURRENT_REQUESTS' : 2,
-                'CLOSESPIDER_ITEMCOUNT' : 100,
-                'CONCURRENT_REQUESTS_PER_DOMAIN' : 100,
+                'CONCURRENT_REQUESTS' : 20,
+                'CLOSESPIDER_ITEMCOUNT' : 200,
+                # 'CONCURRENT_REQUESTS_PER_DOMAIN' : 100,
                 # "CONCURRENT_REQUESTS_PER_IP" : 100,
                 'OPTIMIZER_STATUS' : True
     }
+    added_settings = settings
     for parameter, value in optimizer.items():
-        settings = settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
+        added_settings = added_settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
+    execute = "scrapy crawl " + added_settings +  "sitemap"
 
-
-execute = "scrapy crawl " + settings +  "sitemap"
+    
 print(execute)
 cmdline.execute(execute.split())

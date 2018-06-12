@@ -89,6 +89,8 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [x] Filter out malicious massive input webpages, 
 - [x] Hardware benchmarking for optimal performance across various machines 
 - [x] Allow scrapy to crawl multiple domains/sitemaps 
-- [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain
+- [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain - To be skipped
 - [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
-- [ ] ........ if you have more suggestions, let's discuss at the issues section
+- [ ] Write general scraper for pagination
+- [ ] Record the scraping time in DB as well
+- [ ] Write a Job scheduler for scheduling crawls

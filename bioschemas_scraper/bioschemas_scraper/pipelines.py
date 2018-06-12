@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import hashlib
-import canonicaljson
 import logging
 from scrapy.conf import settings
 from bioschemas_scraper.custom import connect_db 
@@ -22,7 +20,6 @@ class MongoDBPipeline(object):
         self.collection = db[settings['MONGODB_COLLECTION']]
 
     def process_item(self, item, spider):
-        _id = hashlib.sha256(canonicaljson.encode_canonical_json(item['jsonld'])).hexdigest()
-        self.collection.update({'_id':_id}, item['jsonld'], upsert=True)
+        dbindex = self.collection.insert(item['jsonld'])
         logger.info("Sample added to MongoDB database!")
         return item

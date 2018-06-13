@@ -1,6 +1,7 @@
 import io
 import argparse
 from scrapy import cmdline
+from datetime import datetime
 from six.moves.configparser import ConfigParser
 
 
@@ -19,6 +20,9 @@ parser.add_argument('con_req_dom',
                     type=int,
                     default=100,
                     help='Input parameter CONCURRENT_REQUESTS_PER_DOMAIN, def: 100')
+parser.add_argument('--schedule',
+                    action='store_true',
+                    help='Used by scheduler, please don\'t use this flag')
 args = parser.parse_args()
 
 
@@ -35,9 +39,11 @@ for section_name in parser.sections():
             setting = setting + str('--set=') + str(name) + '=' + str(value) + str(' ')
         settings = settings + setting
 
+
+logfile = datetime.now().strftime("%Y%m%d-%H%M%S") + '-' + 'cronjob.log'
 user_args = {
             'CONCURRENT_REQUESTS' : args.con_req,
-            'CONCURRENT_REQUESTS_PER_DOMAIN' : args.con_req_dom
+            'CONCURRENT_REQUESTS_PER_DOMAIN' : args.con_req_dom,
 }
 for parameter, value in user_args.items():
     settings = settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
@@ -55,6 +61,17 @@ if args.optimize is True:
         added_settings = added_settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
     execute = "scrapy crawl " + added_settings +  "sitemap"
 
+
+if args.schedule is True:
+    scheduler = {
+                'LOG_FILE' : '../log/' + logfile,
+                'LOG_ENABLED' : True,
+                'CLOSESPIDER_ITEMCOUNT' : 5,
+    }
+    added_settings = settings
+    for parameter, value in scheduler.items():
+        added_settings = added_settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
+    execute = "scrapy crawl " + added_settings +  "sitemap"    
     
 print(execute)
 cmdline.execute(execute.split())

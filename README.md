@@ -71,7 +71,7 @@ Please read CONTRIBUTING.md for details on our code of conduct, and the process 
 This project is licensed under the Apache-2.0 License - see the LICENSE file for details
 
 
-## Scrapy Implementations
+## Mind Map
 
 - [x] Sitemap Crawling
 - [x] JSON-LD Extraction
@@ -89,8 +89,12 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [x] Filter out malicious massive input webpages, 
 - [x] Hardware benchmarking for optimal performance across various machines 
 - [x] Allow scrapy to crawl multiple domains/sitemaps 
+- [x] Record the scraping time in DB as well
 - [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain - To be skipped
 - [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
 - [ ] Write general scraper for pagination
-- [ ] Record the scraping time in DB as well
-- [ ] Write a Job scheduler for scheduling crawls
+- [x] Write a Job scheduler for scheduling crawls
+- [ ] Check timestamp before recrawling
+- [ ] Error Checking in MongoDB using getLastError
+- [ ] MongoDB Pagnation
+- [ ] MongoDB to Solr

@@ -63,8 +63,16 @@ This is optional and you may do it or skip it.
 
 ```
 cd ..
-python3 scheduler.py -con_req <No, of concurrent requests> -con_req_dom <No. of concurrent request/domain> -freq <No. of days after which to repeat>
+python3 scheduler.py -con_req <No, of concurrent requests> -con_req_dom <No. of concurrent request/domain> -freq <No. of days after which to repeat> -py_path=<path to python interpreter in your virtuaenv>
 ```
+
+eg:
+
+```
+python3 scheduler.py -con_req 8 -con_req_dom 100 -freq 3 -py_path /home/innovationchef/Desktop/buzzbang/bin/python3
+```
+
+One may check the cronjob with ```crontab -l``` and check the last execution status using ```service cron status```
 
 TODO: Implementation and documentation of inserting this data into Solr.
 

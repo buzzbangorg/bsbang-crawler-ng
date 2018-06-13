@@ -22,6 +22,9 @@ parser.add_argument('-freq',
                     type=int,
                     default=2,
                     help='Number of days; eg, 5 for once in 5 days')
+parser.add_argument('-py_path',
+                    type=str,
+                    help='Absolute path of python from your virtualenv')
 args = parser.parse_args()
 
 
@@ -35,7 +38,7 @@ for job in cron:
         print("Scheduler already working")
         sys.exit()
 
-job = cron.new(command= 'bash ' + currdirec + '/bioschemas_scraper/scheduler.sh ' + str(args.con_req) + ' ' + str(args.con_req_dom), comment=job_comment)
+job = cron.new(command= 'bash ' + currdirec + '/bioschemas_scraper/scheduler.sh ' + str(args.con_req) + ' ' + str(args.con_req_dom) + ' ' + str(args.py_path), comment=job_comment)
 
 job.day.every(args.freq)
 cron.write()

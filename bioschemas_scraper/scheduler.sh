@@ -1,4 +1,4 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
-/home/innovationchef/Desktop/buzzbang/bin/python3 run.py $1 $2 --schedule 
+/home/innovationchef/Desktop/buzzbang/bin/python3 run.py \-con_req $1 \-con_req_dom $2 --schedule 

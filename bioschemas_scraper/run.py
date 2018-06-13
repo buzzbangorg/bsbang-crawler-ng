@@ -7,19 +7,19 @@ from six.moves.configparser import ConfigParser
 
 parser = argparse.ArgumentParser('If this is your first run on this hardware,'
                                   + ' you may consider optimizing performance')
-parser.add_argument('--optimize',
-                    action='store_true',
-                    help='If true then scraper will find optimal parameters')
-parser.add_argument('con_req',
+parser.add_argument('-con_req',
                     nargs='?',
                     type=int,
                     default=8,
                     help='Input parameter CONCURRENT_REQUESTS, def: 8')
-parser.add_argument('con_req_dom',
+parser.add_argument('-con_req_dom',
                     nargs='?',
                     type=int,
                     default=100,
                     help='Input parameter CONCURRENT_REQUESTS_PER_DOMAIN, def: 100')
+parser.add_argument('--optimize',
+                    action='store_true',
+                    help='If true then scraper will find optimal parameters')
 parser.add_argument('--schedule',
                     action='store_true',
                     help='Used by scheduler, please don\'t use this flag')
@@ -66,7 +66,6 @@ if args.schedule is True:
     scheduler = {
                 'LOG_FILE' : '../log/' + logfile,
                 'LOG_ENABLED' : True,
-                'CLOSESPIDER_ITEMCOUNT' : 5,
     }
     added_settings = settings
     for parameter, value in scheduler.items():

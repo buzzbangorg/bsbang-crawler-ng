@@ -42,21 +42,28 @@ service mongodb status
 **Step 1: Put initialization arguments in the config/setting.ini file**
 
 **Step 2: Find optimal value of parameters for your hardware**
-There are two parameters that you need to tune for faster crawling on your system - 'CONCURRENT_REQUESTS' - [4,8,16,32] and 'CONCURRENT_REQUESTS_PER_DOMAIN' - [100,500,1000]. Put different values of these parameters and view the stats report in stats/scrapy_stats.csv file. For benchmarking, we are scraping 200 items (fixed) from the sitemap and we observe the 'scraping time' in the stats file for each pair of these two parameters. The pair that minimizes this time is best for your system.
+There are two parameters that you need to tune for faster crawling on your system - 'CONCURRENT_REQUESTS' - [4,8,16,32] and 'CONCURRENT_REQUESTS_PER_DOMAIN' - [100,500,1000]. Put different values of these parameters and view the stats report in log/scrapy_stats.csv file. For benchmarking, we are scraping 200 items (fixed) from the sitemap and we observe the 'scraping time' in the stats file for each pair of these two parameters. The pair that minimizes this time is best for your system.
 
 Note: If you observe that increasing 'CONCURRENT_REQUESTS' is making your scraper faster, do not go about wildly increasing it. Check if the 'memusage/max' is less than or equal to 80% of CPU capacity. Beyond this, your system will choke.
 
 ```
 cd bioschemas_scraper
-python3 run.py --optimize <CONCURRENT_REQUESTS> <CONCURRENT_REQUESTS_PER_DOMAIN>
+python3 run.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain> --optimize
 ```
 
 **Step 3: Crawl the sitemap and store the data in a MongoDB database**
 Supply the tuned parameters and run the script.
 
 ```
-cd bioschemas_scraper
-python3 run.py <CONCURRENT_REQUESTS> <CONCURRENT_REQUESTS_PER_DOMAIN>
+python3 run.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain>
+```
+
+**Step 4: Schedule the crawler to recrawl the sitemaps at reqular intervals**
+This is optional and you may do it or skip it.
+
+```
+cd ..
+python3 scheduler.py -con_req <No, of concurrent requests> -con_req_dom <No. of concurrent request/domain> -freq <No. of days after which to repeat>
 ```
 
 TODO: Implementation and documentation of inserting this data into Solr.
@@ -94,6 +101,7 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
 - [ ] Write general scraper for pagination
 - [x] Write a Job scheduler for scheduling crawls
+- [ ] virtual env script in bash script
 - [ ] Check timestamp before recrawling
 - [ ] Error Checking in MongoDB using getLastError
 - [ ] MongoDB Pagnation

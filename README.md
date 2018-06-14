@@ -5,7 +5,7 @@ Repository for the next generation Scrapy based Buzzbang Bioschemas crawler
 
 Schema.org is a collaborative effort to bring semantic markup to the web. This project provides web developers with schemas to represent a range of different objects in their websites. Search engines can extract useful information from websites without having to dig into the HTML structure of all the websites they crawl.     
 
-Schema.org defines common generic types like events and datasets which can be used not just in life sciences but in many other disciplines. Bioschemas is working on specifications to improve the description of generic types in life sciences.
+Schema.org defines common generic types like events and datasets which can be used not just in life sciences but in many other disciplines. Bioschemas is working on specifications to improve the description of generic types in life sciences. The community is very actively working to develop new schemas and the biobanks and related communities are following their schema to markup the data. You may see the live deploys here - (BioSchemas Live Deploys)[https://github.com/BioSchemas/bioschemas.github.io/blob/master/_liveDeploys/liveDeploy.md]
 
 Buzzbang is an alpha project to start crawling this data so that it can then be searched in the companion frontend project. 
 
@@ -109,7 +109,7 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
 - [ ] Write general scraper for pagination
 - [x] Write a Job scheduler for scheduling crawls
-- [ ] Check timestamp before recrawling
+- [x] Recrawl URLs which were crawled more than 7 days ago
 - [x] Error Checking in MongoDB using getLastError
 - [ ] MongoDB Pagnation
 - [ ] MongoDB to Solr

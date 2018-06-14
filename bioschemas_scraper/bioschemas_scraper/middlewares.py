@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from scrapy.conf import settings
 from scrapy.spiders import SitemapSpider
 from scrapy.exceptions import IgnoreRequest
@@ -15,8 +16,12 @@ class ScrapingMiddleware(object):
     def process_request(self, request, spider):
         x = self.collection.find_one({'buzz_url': remove_url_schema(request.url)})
         if x is not None:
-            spider.logger.info("URL already scraped - %s", request.url)
-            raise IgnoreRequest()
+            if datetime.datetime.now()-x['_id'].generation_time.replace(tzinfo=None)<datetime.timedelta(days=7):
+                spider.logger.info("URL already scraped in past 7 days - %s", request.url)
+                raise IgnoreRequest()
+            else:
+                spider.logger.info("URL requested - %s", request.url)
+                return None
         else:
             spider.logger.info("URL requested - %s", request.url)
             return None

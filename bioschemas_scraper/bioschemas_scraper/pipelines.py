@@ -21,5 +21,8 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         dbindex = self.collection.insert(item['jsonld'])
-        logger.info("Sample added to MongoDB database!")
+        if isinstance(self.collection.find_one({'_id': dbindex}), dict):
+            logger.info("Sample added to MongoDB database!")
+        else:
+            logger.warning("Sample not added to MongoDB - %s", item['jsonld']['buzz_url'])
         return item

@@ -109,8 +109,7 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
 - [ ] Write general scraper for pagination
 - [x] Write a Job scheduler for scheduling crawls
-- [ ] virtual env script in bash script
 - [ ] Check timestamp before recrawling
-- [ ] Error Checking in MongoDB using getLastError
+- [x] Error Checking in MongoDB using getLastError
 - [ ] MongoDB Pagnation
 - [ ] MongoDB to Solr

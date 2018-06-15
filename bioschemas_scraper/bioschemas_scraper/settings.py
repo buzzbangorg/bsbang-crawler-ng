@@ -44,15 +44,15 @@ LOG_LEVEL = 'INFO'                     #   'CRITICAL' > 'ERROR' > 'WARNING' > 'I
 MEMDEBUG_ENABLED = True
 
 #### Concurrency Settings - To be tested
-CONCURRENT_REQUESTS = 16
-CONCURRENT_REQUESTS_PER_DOMAIN = 500
+CONCURRENT_REQUESTS = 8
+CONCURRENT_REQUESTS_PER_DOMAIN = 100
 # CONCURRENT_REQUESTS_PER_IP =			# Ignore this 
 
 #### MongoDB Settings
-MONGODB_SERVER = "localhost"
-MONGODB_PORT = 27017
-MONGODB_DB = "bioschemas_db"
-MONGODB_COLLECTION = "jsonlds"
+MONGODB_SERVER = ""
+MONGODB_PORT = ""
+MONGODB_DB = ""
+MONGODB_COLLECTION = ""
 
 #### Optimization Settings
 OPTIMIZER_STATUS = False

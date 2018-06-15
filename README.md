@@ -5,7 +5,7 @@ Repository for the next generation Scrapy based Buzzbang Bioschemas crawler
 
 Schema.org is a collaborative effort to bring semantic markup to the web. This project provides web developers with schemas to represent a range of different objects in their websites. Search engines can extract useful information from websites without having to dig into the HTML structure of all the websites they crawl.     
 
-Schema.org defines common generic types like events and datasets which can be used not just in life sciences but in many other disciplines. Bioschemas is working on specifications to improve the description of generic types in life sciences. The community is very actively working to develop new schemas and the biobanks and related communities are following their schema to markup the data. You may see the live deploys here - (BioSchemas Live Deploys)[https://github.com/BioSchemas/bioschemas.github.io/blob/master/_liveDeploys/liveDeploy.md]
+Schema.org defines common generic types like events and datasets which can be used not just in life sciences but in many other disciplines. Bioschemas is working on specifications to improve the description of generic types in life sciences. The community is very actively working to develop new schemas and the biobanks and related communities are following their schema to markup the data. You may see the live deploys here - [BioSchemas Live Deploys](https://github.com/BioSchemas/bioschemas.github.io/blob/master/_liveDeploys/liveDeploy.md)
 
 Buzzbang is an alpha project to start crawling this data so that it can then be searched in the companion frontend project. 
 
@@ -42,6 +42,7 @@ service mongodb status
 **Step 1: Put initialization arguments in the config/setting.ini file**
 
 **Step 2: Find optimal value of parameters for your hardware**
+
 There are two parameters that you need to tune for faster crawling on your system - 'CONCURRENT_REQUESTS' - [4,8,16,32] and 'CONCURRENT_REQUESTS_PER_DOMAIN' - [100,500,1000]. Put different values of these parameters and view the stats report in log/scrapy_stats.csv file. For benchmarking, we are scraping 200 items (fixed) from the sitemap and we observe the 'scraping time' in the stats file for each pair of these two parameters. The pair that minimizes this time is best for your system.
 
 Note: If you observe that increasing 'CONCURRENT_REQUESTS' is making your scraper faster, do not go about wildly increasing it. Check if the 'memusage/max' is less than or equal to 80% of CPU capacity. Beyond this, your system will choke.
@@ -52,6 +53,7 @@ python3 run.py -con_req <No. of concurrent requests> -con_req_dom <No. of concur
 ```
 
 **Step 3: Crawl the sitemap and store the data in a MongoDB database**
+
 Supply the tuned parameters and run the script.
 
 ```
@@ -59,6 +61,7 @@ python3 run.py -con_req <No. of concurrent requests> -con_req_dom <No. of concur
 ```
 
 **Step 4: Schedule the crawler to recrawl the sitemaps at reqular intervals**
+
 This is optional and you may do it or skip it.
 
 ```
@@ -73,6 +76,39 @@ python3 scheduler.py -con_req 8 -con_req_dom 100 -freq 3 -py_path /home/innovati
 ```
 
 One may check the cronjob with ```crontab -l``` and check the last execution status using ```service cron status```
+
+**Step 5: Install Solr**
+
+Follow [this](https://www.howtoforge.com/tutorial/how-to-install-and-configure-solr-on-ubuntu-1604/) article to install Solr in your system.
+
+Once installed, you may check the running status using the command - ```service solr status``` and you can access the UI in your browser at ```localhost:8983/```
+
+**Step 5: Create a Solr core named buzzbang**
+
+```
+sudo su - solr -c "/opt/solr/bin/solr create -c buzzbang"
+```
+
+If you used a different installation location for Solr, use that particular Solr bin path to create a core.  
+
+```
+cd $SOLR/bin
+./solr create -c bsbang
+```
+
+**Step 5: Setup and configure buzzbang**
+
+```
+cd bsbang-crawler-ng/setup
+./solr-setup.py <path-to-bsbang-config-file> --solr-core-url <URL-of-solr-endpoint>
+
+```
+
+Example:
+
+```
+./solr-setup.py ../config/solr-setup.xml --solr-core-url http://localhost:8983/solr/buzzbang/
+```
 
 TODO: Implementation and documentation of inserting this data into Solr.
 

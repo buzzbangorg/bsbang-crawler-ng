@@ -1,5 +1,4 @@
 {
-
     "//": "The properties that must exist on schemas for us to accept them for indexing",
     "mandatory_properties": {
         "Thing": ["@type", "name", "url"],

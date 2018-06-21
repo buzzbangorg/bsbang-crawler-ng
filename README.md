@@ -93,8 +93,14 @@ If you used a different installation location for Solr, use that particular Solr
 
 ```
 cd $SOLR/bin
-./solr create -c bsbang
+./solr create -c buzzbang
 ```
+
+TIP: To deletea Solr core permanently, point your browser to the following link - 
+
+```
+http://localhost:8983/solr/admin/cores?action=UNLOAD&core=buzzbang
+```  
 
 **Step 5: Setup and configure buzzbang**
 

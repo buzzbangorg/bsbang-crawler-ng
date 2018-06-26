@@ -28,10 +28,10 @@ pip3 install -r requirements.txt
 
 **Step 3: Install MongoDB if necessary**
 
-You may follow this [blog](https://hevodata.com/blog/install-mongodb-on-ubuntu/) to install MongoDB on your system. 
-
+Install MongoDB on your system.
 
 Setup the MongoDB server using MongoDBServer settings in the conf/settings.ini file.
+
 Start and check if the MongoDB server is up using the following commands in another terminal - 
 ```
 service mongodb start
@@ -79,7 +79,7 @@ One may check the cronjob with ```crontab -l``` and check the last execution sta
 
 **Step 5: Install Solr**
 
-Follow [this](https://www.howtoforge.com/tutorial/how-to-install-and-configure-solr-on-ubuntu-1604/) article to install Solr in your system.
+Install Solr on your system.
 
 Once installed, you may check the running status using the command - ```service solr status``` and you can access the UI in your browser at ```localhost:8983/```
 

@@ -96,7 +96,7 @@ cd $SOLR/bin
 ./solr create -c buzzbang
 ```
 
-TIP: To deletea Solr core permanently, point your browser to the following link - 
+TIP: To delete a Solr core permanently, point your browser to the following link - 
 
 ```
 http://localhost:8983/solr/admin/cores?action=UNLOAD&core=buzzbang

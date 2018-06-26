@@ -81,11 +81,13 @@ One may check the cronjob with ```crontab -l``` and check the last execution sta
 
 **Step 5: Install Solr**
 
+** Past this point, we still need to implement indexing of data into Solr **
+
 Install Solr on your system.
 
 Once installed, you may check the running status using the command - ```service solr status``` and you can access the UI in your browser at ```localhost:8983/```
 
-**Step 5: Create a Solr core named buzzbang**
+**Step 6: Create a Solr core named buzzbang**
 
 ```
 sudo su - solr -c "/opt/solr/bin/solr create -c buzzbang"
@@ -104,7 +106,7 @@ TIP: To delete a Solr core permanently, point your browser to the following link
 http://localhost:8983/solr/admin/cores?action=UNLOAD&core=buzzbang
 ```  
 
-**Step 5: Setup and configure buzzbang**
+**Step 7: Setup and configure buzzbang**
 
 ```
 cd bsbang-crawler-ng/setup
@@ -117,8 +119,6 @@ Example:
 ```
 ./solr-setup.py ../config/solr-setup.xml --solr-core-url http://localhost:8983/solr/buzzbang/
 ```
-
-TODO: Implementation and documentation of inserting this data into Solr.
 
 ## Running the tests
 TBD

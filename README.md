@@ -41,6 +41,8 @@ service mongodb status
 ## Usage
 **Step 1: Put initialization arguments in the config/setting.ini file**
 
+The defaults are probably going to be fine but you might want to check them.
+
 **Step 2: Find optimal value of parameters for your hardware**
 
 There are two parameters that you need to tune for faster crawling on your system - 'CONCURRENT_REQUESTS' - [4,8,16,32] and 'CONCURRENT_REQUESTS_PER_DOMAIN' - [100,500,1000]. Put different values of these parameters and view the stats report in log/scrapy_stats.csv file. For benchmarking, we are scraping 200 items (fixed) from the sitemap and we observe the 'scraping time' in the stats file for each pair of these two parameters. The pair that minimizes this time is best for your system.

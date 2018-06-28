@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import io
+import sys, os
 import argparse
-from scrapy import cmdline
 from datetime import datetime
 from six.moves.configparser import ConfigParser
 
@@ -28,7 +28,7 @@ parser.add_argument('--schedule',
 args = parser.parse_args()
 
 
-config_file = "../config/settings.ini"
+config_file = "config/settings.ini"
 allowed_settings_scrapy = ['MongoDBServer', 'Logging', 'Concurrency Settings']
 parser = ConfigParser()
 parser.optionxform = str
@@ -73,6 +73,7 @@ if args.schedule is True:
     for parameter, value in scheduler.items():
         added_settings = added_settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
     execute = "scrapy crawl " + added_settings +  "sitemap"    
-    
-print(execute)
-cmdline.execute(execute.split())
+
+# print(execute)    
+path = 'cd ' + os.getcwd()+'/bioschemas_scraper '
+os.system('bash bioschemas_scraper/scrape.sh ' + '"' + path + '" ' + '"' + execute + '"')

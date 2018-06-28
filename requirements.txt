@@ -1,4 +1,3 @@
-canonicaljson
 scrapy
 extruct
 pymongo

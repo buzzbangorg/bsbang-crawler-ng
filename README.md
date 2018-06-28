@@ -79,47 +79,6 @@ python3 scheduler.py -con_req 8 -con_req_dom 100 -freq 3 -py_path /home/innovati
 
 One may check the cronjob with ```crontab -l``` and check the last execution status using ```service cron status```
 
-**Step 5: Install Solr**
-
-** Past this point, we still need to implement indexing of data into Solr **
-
-Install Solr on your system.
-
-Once installed, you may check the running status using the command - ```service solr status``` and you can access the UI in your browser at ```localhost:8983/```
-
-**Step 6: Create a Solr core named buzzbang**
-
-```
-sudo su - solr -c "/opt/solr/bin/solr create -c buzzbang"
-```
-
-If you used a different installation location for Solr, use that particular Solr bin path to create a core.  
-
-```
-cd $SOLR/bin
-./solr create -c buzzbang
-```
-
-TIP: To delete a Solr core permanently, point your browser to the following link - 
-
-```
-http://localhost:8983/solr/admin/cores?action=UNLOAD&core=buzzbang
-```  
-
-**Step 7: Setup and configure buzzbang**
-
-```
-cd bsbang-crawler-ng/setup
-./solr-setup.py <path-to-bsbang-config-file> --solr-core-url <URL-of-solr-endpoint>
-
-```
-
-Example:
-
-```
-./solr-setup.py ../config/solr-setup.xml --solr-core-url http://localhost:8983/solr/buzzbang/
-```
-
 ## Running the tests
 TBD
 
@@ -155,5 +114,3 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [x] Write a Job scheduler for scheduling crawls
 - [x] Recrawl URLs which were crawled more than 7 days ago
 - [x] Error Checking in MongoDB using getLastError
-- [ ] MongoDB Pagnation
-- [ ] MongoDB to Solr

@@ -14,8 +14,8 @@ Buzzbang is an alpha project to start crawling this data so that it can then be 
 
 ```
 pip3 install virtualenv
-python3 -m venv buzzbang
-source buzzbang/bin/activate
+python3 -m venv buzzbang-venv
+source buzzbang-venv/bin/activate
 git clone https://github.com/buzzbangorg/bsbang-crawler-ng.git
 cd bsbang-crawler-ng
 ```

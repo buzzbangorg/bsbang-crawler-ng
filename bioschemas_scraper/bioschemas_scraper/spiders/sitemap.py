@@ -1,3 +1,4 @@
+import datetime
 import logging
 from extruct.jsonld import JsonLdExtractor  
 from bioschemas_scraper.custom import remove_url_schema, get_sitemap_url, parse_sitemap
@@ -15,6 +16,7 @@ urls = parse_sitemap(sitemap)
 class BiosamplesSitemapSpider(SitemapSpider):
     name = 'sitemap'
     sitemap_urls = sitemap
+
     def parse(self, response):
         """
         @url http://www.ebi.ac.uk/biosamples/samples/SAMN04581192
@@ -29,7 +31,13 @@ class BiosamplesSitemapSpider(SitemapSpider):
             yield None
         else:
             item = BioschemasScraperItem()
-            jsonld[0]['buzz_url'] = remove_url_schema(response.url)
-            item['jsonld'] = jsonld[0]
+
+            item['jsonld'] = {
+                'schema': jsonld,
+                'url': remove_url_schema(response.url),
+                'datetime': datetime.datetime.utcnow().isoformat(),
+                'crawer-id': 'buzzbang-ng'
+            }
+
             logger.info("Sample Extracted - %s", response.url)
             yield item

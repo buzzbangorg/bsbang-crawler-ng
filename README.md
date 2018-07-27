@@ -51,7 +51,7 @@ Note: If you observe that increasing 'CONCURRENT_REQUESTS' is making your scrape
 
 ```
 cd bioschemas_scraper
-python3 run.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain> --optimize
+python3 bsbang-scrape.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain> --optimize
 ```
 
 **Step 3: Crawl the sitemap and store the data in a MongoDB database**
@@ -59,7 +59,7 @@ python3 run.py -con_req <No. of concurrent requests> -con_req_dom <No. of concur
 Supply the tuned parameters and run the script.
 
 ```
-python3 run.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain>
+python3 bsbang-scrape.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain>
 ```
 
 **Step 4: Schedule the crawler to recrawl the sitemaps at reqular intervals**

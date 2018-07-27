@@ -36,7 +36,7 @@ class BiosamplesSitemapSpider(SitemapSpider):
                 'schema': jsonld,
                 'url': remove_url_schema(response.url),
                 'datetime': datetime.datetime.utcnow().isoformat(),
-                'crawer-id': 'buzzbang-ng'
+                'crawler-id': 'buzzbang-ng'
             }
 
             logger.info("Sample Extracted - %s", response.url)

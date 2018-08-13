@@ -1,8 +1,6 @@
 # bsbang-crawler-ng
 Repository for the next generation Scrapy based Buzzbang Bioschemas crawler
 
-**THIS IS NOT YET COMPLETE, PLEASE DO NOT USE YET**
-
 Schema.org is a collaborative effort to bring semantic markup to the web. This project provides web developers with schemas to represent a range of different objects in their websites. Search engines can extract useful information from websites without having to dig into the HTML structure of all the websites they crawl.     
 
 Schema.org defines common generic types like events and datasets which can be used not just in life sciences but in many other disciplines. Bioschemas is working on specifications to improve the description of generic types in life sciences. The community is very actively working to develop new schemas and the biobanks and related communities are following their schema to markup the data. You may see the live deploys here - [BioSchemas Live Deploys](https://github.com/BioSchemas/bioschemas.github.io/blob/master/_liveDeploys/liveDeploy.md)
@@ -79,9 +77,6 @@ python3 scheduler.py -con_req 8 -con_req_dom 100 -freq 3 -py_path /home/innovati
 
 One may check the cronjob with ```crontab -l``` and check the last execution status using ```service cron status```
 
-## Running the tests
-TBD
-
 ## Contributing
 Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
 
@@ -90,7 +85,6 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 
 
 ## Mind Map
-
 - [x] Sitemap Crawling
 - [x] JSON-LD Extraction
 - [x] Item Pipeline Implementation
@@ -108,9 +102,11 @@ This project is licensed under the Apache-2.0 License - see the LICENSE file for
 - [x] Hardware benchmarking for optimal performance across various machines 
 - [x] Allow scrapy to crawl multiple domains/sitemaps 
 - [x] Record the scraping time in DB as well
-- [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain - To be skipped
-- [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
-- [ ] Write general scraper for pagination
 - [x] Write a Job scheduler for scheduling crawls
 - [x] Recrawl URLs which were crawled more than 7 days ago
 - [x] Error Checking in MongoDB using getLastError
+- [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain - To be skipped
+- [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
+- [ ] Write general scraper for pagination - issue 18
+- [ ] Make logging quieter
+- [ ] Create a common format for MongoDB database for different crawlers - decide on which metadata to store  

@@ -1,6 +1,6 @@
 import datetime
 import logging
-from extruct.jsonld import JsonLdExtractor  
+from extruct.jsonld import JsonLdExtractor
 from bioschemas_scraper.custom import remove_url_schema, get_sitemap_url, parse_sitemap
 from bioschemas_scraper.items import BioschemasScraperItem
 from scrapy.spiders import SitemapSpider

@@ -8,7 +8,7 @@ from crontab import CronTab
 
 
 parser = argparse.ArgumentParser('Schedule your scraper to recrawl at regular intervals.'
-                                  + ' Put the optimization parameters that you have selected')
+                                 + ' Put the optimization parameters that you have selected')
 parser.add_argument('-con_req',
                     nargs='?',
                     type=str,
@@ -40,7 +40,8 @@ for job in cron:
         print("Scheduler already working")
         sys.exit()
 
-job = cron.new(command= 'bash ' + currdirec + '/bioschemas_scraper/scheduler.sh ' + str(args.con_req) + ' ' + str(args.con_req_dom) + ' ' + str(args.py_path), comment=job_comment)
+job = cron.new(command='bash ' + currdirec + '/bioschemas_scraper/scheduler.sh ' +
+               str(args.con_req) + ' ' + str(args.con_req_dom) + ' ' + str(args.py_path), comment=job_comment)
 
 job.day.every(args.freq)
 cron.write()

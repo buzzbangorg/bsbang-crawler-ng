@@ -8,16 +8,19 @@ from bioschemas_scraper.custom import remove_url_schema, connect_db
 
 
 class ScrapingMiddleware(object):
+
     def __init__(self):
         client = connect_db()
         db = client[settings['MONGODB_DB']]
         self.collection = db[settings['MONGODB_COLLECTION']]
 
     def process_request(self, request, spider):
-        x = self.collection.find_one({'buzz_url': remove_url_schema(request.url)})
+        x = self.collection.find_one(
+            {'buzz_url': remove_url_schema(request.url)})
         if x is not None:
-            if datetime.datetime.now()-x['_id'].generation_time.replace(tzinfo=None)<datetime.timedelta(days=7):
-                spider.logger.info("URL already scraped in past 7 days - %s", request.url)
+            if datetime.datetime.now() - x['_id'].generation_time.replace(tzinfo=None) < datetime.timedelta(days=7):
+                spider.logger.info(
+                    "URL already scraped in past 7 days - %s", request.url)
                 raise IgnoreRequest()
             else:
                 spider.logger.info("URL requested - %s", request.url)
@@ -31,7 +34,8 @@ class ScrapingMiddleware(object):
         edited_url = remove_url_schema(response.url)
         if edited_url in urls:
             urls[edited_url] = 1
-            spider.logger.info("Crawling %d of %d pages", sum(urls.values()), len(urls))
+            spider.logger.info("Crawling %d of %d pages",
+                               sum(urls.values()), len(urls))
         return response
 
     def process_exception(self, request, exception, spider):

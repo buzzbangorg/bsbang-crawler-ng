@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
 import io
-import sys, os
+import sys
+import os
 import argparse
 from datetime import datetime
 from six.moves.configparser import ConfigParser
 
 
 parser = argparse.ArgumentParser('If this is your first run on this hardware,'
-                                  + ' you may consider optimizing performance')
+                                 + ' you may consider optimizing performance')
 parser.add_argument('-con_req',
                     nargs='?',
                     type=int,
@@ -37,43 +38,48 @@ settings = str()
 for section_name in parser.sections():
     if section_name in allowed_settings_scrapy:
         setting = str()
-        for name, value in  parser.items(section_name):
-            setting = setting + str('--set=') + str(name) + '=' + str(value) + str(' ')
+        for name, value in parser.items(section_name):
+            setting = setting + str('--set=') + \
+                str(name) + '=' + str(value) + str(' ')
         settings = settings + setting
 
 
 logfile = datetime.now().strftime("%Y%m%d-%H%M%S") + '-' + 'cronjob.log'
 user_args = {
-            'CONCURRENT_REQUESTS' : args.con_req,
-            'CONCURRENT_REQUESTS_PER_DOMAIN' : args.con_req_dom,
+    'CONCURRENT_REQUESTS': args.con_req,
+    'CONCURRENT_REQUESTS_PER_DOMAIN': args.con_req_dom,
 }
 for parameter, value in user_args.items():
-    settings = settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
-execute = "scrapy crawl " + settings +  "sitemap"
+    settings = settings + str('--set=') + \
+        str(parameter) + '=' + str(value) + str(' ')
+execute = "scrapy crawl " + settings + "sitemap"
 
 
 if args.optimize is True:
     optimizer = {
-                'OPTIMIZER_STATUS' : True,
-                'MONGODB_COLLECTION' : 'test',
-                'CLOSESPIDER_ITEMCOUNT' : 200,
+        'OPTIMIZER_STATUS': True,
+        'MONGODB_COLLECTION': 'test',
+        'CLOSESPIDER_ITEMCOUNT': 200,
     }
     added_settings = settings
     for parameter, value in optimizer.items():
-        added_settings = added_settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
-    execute = "scrapy crawl " + added_settings +  "sitemap"
+        added_settings = added_settings + \
+            str('--set=') + str(parameter) + '=' + str(value) + str(' ')
+    execute = "scrapy crawl " + added_settings + "sitemap"
 
 
 if args.schedule is True:
     scheduler = {
-                'LOG_FILE' : '../log/' + logfile,
-                'LOG_ENABLED' : True,
+        'LOG_FILE': '../log/' + logfile,
+        'LOG_ENABLED': True,
     }
     added_settings = settings
     for parameter, value in scheduler.items():
-        added_settings = added_settings + str('--set=') + str(parameter) + '=' + str(value) + str(' ')
-    execute = "scrapy crawl " + added_settings +  "sitemap"    
+        added_settings = added_settings + \
+            str('--set=') + str(parameter) + '=' + str(value) + str(' ')
+    execute = "scrapy crawl " + added_settings + "sitemap"
 
-# print(execute)    
-path = 'cd ' + os.getcwd()+'/bioschemas_scraper '
-os.system('bash bioschemas_scraper/scrape.sh ' + '"' + path + '" ' + '"' + execute + '"')
+# print(execute)
+path = 'cd ' + os.getcwd() + '/bioschemas_scraper '
+os.system('bash bioschemas_scraper/scrape.sh ' +
+          '"' + path + '" ' + '"' + execute + '"')

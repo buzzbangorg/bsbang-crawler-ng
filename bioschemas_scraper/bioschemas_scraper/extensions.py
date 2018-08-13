@@ -32,8 +32,10 @@ class StatsCollector(object):
         ext = cls(crawler.stats)
 
         # connect the extension object to signals
-        crawler.signals.connect(ext.spider_opened, signal=signals.spider_opened)
-        crawler.signals.connect(ext.spider_closed, signal=signals.spider_closed)
+        crawler.signals.connect(
+            ext.spider_opened, signal=signals.spider_opened)
+        crawler.signals.connect(
+            ext.spider_closed, signal=signals.spider_closed)
         crawler.signals.connect(ext.item_scraped, signal=signals.item_scraped)
 
         # return the extension object
@@ -41,22 +43,25 @@ class StatsCollector(object):
 
     def spider_opened(self, spider):
         self.initial_db_size = self.collection.count()
-        logger.info("%d documents already present in the DB", self.initial_db_size)
+        logger.info("%d documents already present in the DB",
+                    self.initial_db_size)
         logger.info("opened spider %s", spider.name)
 
     def spider_closed(self, spider):
         self.final_db_size = self.collection.count()
-        logger.info("%d documents present in the DB after crawl", self.final_db_size)
+        logger.info("%d documents present in the DB after crawl",
+                    self.final_db_size)
         logger.info("closed spider %s", spider.name)
 
         if bool(settings['OPTIMIZER_STATUS']) is True:
             drop_db(settings['MONGODB_DB'])
-        
+
         final_stats = self.stats.get_stats().copy()
         final_stats['initial_db_size'] = self.initial_db_size
         final_stats['final_db_size'] = self.final_db_size
         final_stats['CONCURRENT_REQUESTS'] = settings['CONCURRENT_REQUESTS']
-        final_stats['CONCURRENT_REQUESTS_PER_DOMAIN'] = settings['CONCURRENT_REQUESTS_PER_DOMAIN']
+        final_stats['CONCURRENT_REQUESTS_PER_DOMAIN'] = settings[
+            'CONCURRENT_REQUESTS_PER_DOMAIN']
         generate_report(final_stats)
 
     def item_scraped(self, item, spider):

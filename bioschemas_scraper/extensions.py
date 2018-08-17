@@ -1,6 +1,5 @@
 import logging
 from scrapy import signals
-from scrapy.conf import settings
 from scrapy.exceptions import NotConfigured
 from bioschemas_scraper.custom import connect_db, generate_report, drop_db
 
@@ -33,6 +32,7 @@ class StatsCollector(object):
             ext.spider_closed, signal=signals.spider_closed)
         crawler.signals.connect(ext.item_scraped, signal=signals.item_scraped)
 
+        ext.settings = crawler.settings
         client = connect_db(crawler.settings)
         db = client[crawler.settings['MONGODB_DB']]
         ext.collection = db[crawler.settings['MONGODB_COLLECTION']]
@@ -53,14 +53,14 @@ class StatsCollector(object):
                     self.final_db_size)
         logger.info("closed spider %s", spider.name)
 
-        if bool(settings['OPTIMIZER_STATUS']) is True:
-            drop_db(settings['MONGODB_DB'])
+        if bool(self.settings['OPTIMIZER_STATUS']) is True:
+            drop_db(self.settings['MONGODB_DB'])
 
         final_stats = self.stats.get_stats().copy()
         final_stats['initial_db_size'] = self.initial_db_size
         final_stats['final_db_size'] = self.final_db_size
-        final_stats['CONCURRENT_REQUESTS'] = settings['CONCURRENT_REQUESTS']
-        final_stats['CONCURRENT_REQUESTS_PER_DOMAIN'] = settings[
+        final_stats['CONCURRENT_REQUESTS'] = self.settings['CONCURRENT_REQUESTS']
+        final_stats['CONCURRENT_REQUESTS_PER_DOMAIN'] = self.settings[
             'CONCURRENT_REQUESTS_PER_DOMAIN']
         generate_report(final_stats)
 

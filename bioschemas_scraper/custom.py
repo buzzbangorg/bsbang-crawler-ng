@@ -4,7 +4,6 @@ import logging
 import requests
 import pandas as pd
 from lxml import etree
-from scrapy.conf import settings
 from urllib.parse import urlsplit
 from six.moves.configparser import ConfigParser
 from scrapy.exceptions import CloseSpider
@@ -33,14 +32,14 @@ def connect_db(settings):
     return client
 
 
-def drop_db(dbname):
+def drop_db(settings):
     client = pymongo.MongoClient(
         settings['MONGODB_SERVER'],
         int(settings['MONGODB_PORT'])
     )
     try:
         client.server_info()
-        client.drop_database(dbname)
+        client.drop_database(settings['MONGODB_DB'])
         client.close()
     except pymongo.errors.ServerSelectionTimeoutError as e:
         raise CloseSpider('Unable to connect to MongoDB')

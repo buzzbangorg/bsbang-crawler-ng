@@ -45,13 +45,11 @@ class StatsCollector(object):
         self.initial_db_size = self.collection.count()
         logger.info("%d documents already present in the DB",
                     self.initial_db_size)
-        logger.info("opened spider %s", spider.name)
 
     def spider_closed(self, spider):
         self.final_db_size = self.collection.count()
         logger.info("%d documents present in the DB after crawl",
                     self.final_db_size)
-        logger.info("closed spider %s", spider.name)
 
         if bool(self.settings['OPTIMIZER_STATUS']) is True:
             drop_db(self.settings['MONGODB_DB'])

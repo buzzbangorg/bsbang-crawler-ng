@@ -15,11 +15,6 @@ class StatsCollector(object):
         self.initial_db_size = 0
         self.final_db_size = 0
         self.items_scraped = 0
-        self.item_count = settings['EXT_ITEMCOUNT']
-
-        client = connect_db()
-        db = client[settings['MONGODB_DB']]
-        self.collection = db[settings['MONGODB_COLLECTION']]
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -37,6 +32,11 @@ class StatsCollector(object):
         crawler.signals.connect(
             ext.spider_closed, signal=signals.spider_closed)
         crawler.signals.connect(ext.item_scraped, signal=signals.item_scraped)
+
+        client = connect_db(crawler.settings)
+        db = client[crawler.settings['MONGODB_DB']]
+        ext.collection = db[crawler.settings['MONGODB_COLLECTION']]
+        ext.item_count = crawler.settings['EXT_ITEMCOUNT']
 
         # return the extension object
         return ext

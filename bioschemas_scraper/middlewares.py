@@ -9,10 +9,15 @@ from bioschemas_scraper.custom import remove_url_schema, connect_db
 
 class ScrapingMiddleware(object):
 
-    def __init__(self):
-        client = connect_db()
-        db = client[settings['MONGODB_DB']]
-        self.collection = db[settings['MONGODB_COLLECTION']]
+    @classmethod
+    def from_crawler(cls, crawler):
+        o = cls()
+
+        o.client = connect_db(crawler.settings)
+        o.db = o.client[crawler.settings['MONGODB_DB']]
+        o.collection = o.db[crawler.settings['MONGODB_COLLECTION']]
+
+        return o
 
     def process_request(self, request, spider):
         x = self.collection.find_one(

@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
-import os
 import argparse
+import bioschemas_scraper.settings
+import bioschemas_scraper.spiders.sitemap as sitemap
+from scrapy.crawler import CrawlerProcess
+from scrapy.settings import Settings
 from datetime import datetime
 from six.moves.configparser import ConfigParser
 
@@ -32,14 +35,12 @@ allowed_settings_scrapy = ['MongoDBServer', 'Logging', 'Concurrency Settings']
 parser = ConfigParser()
 parser.optionxform = str
 parser.read(config_file)
-settings = str()
+overiding_settings = {}
+
 for section_name in parser.sections():
     if section_name in allowed_settings_scrapy:
-        setting = str()
         for name, value in parser.items(section_name):
-            setting = setting + str('--set=') + \
-                str(name) + '=' + str(value) + str(' ')
-        settings = settings + setting
+            overiding_settings[name] = value
 
 
 logfile = datetime.now().strftime("%Y%m%d-%H%M%S") + '-' + 'cronjob.log'
@@ -47,11 +48,6 @@ user_args = {
     'CONCURRENT_REQUESTS': args.con_req,
     'CONCURRENT_REQUESTS_PER_DOMAIN': args.con_req_dom,
 }
-for parameter, value in user_args.items():
-    settings = settings + str('--set=') + \
-        str(parameter) + '=' + str(value) + str(' ')
-execute = "scrapy crawl " + settings + "sitemap"
-
 
 if args.optimize is True:
     optimizer = {
@@ -59,25 +55,21 @@ if args.optimize is True:
         'MONGODB_COLLECTION': 'test',
         'CLOSESPIDER_ITEMCOUNT': 200,
     }
-    added_settings = settings
-    for parameter, value in optimizer.items():
-        added_settings = added_settings + \
-            str('--set=') + str(parameter) + '=' + str(value) + str(' ')
-    execute = "scrapy crawl " + added_settings + "sitemap"
-
 
 if args.schedule is True:
     scheduler = {
         'LOG_FILE': '../log/' + logfile,
         'LOG_ENABLED': True,
     }
-    added_settings = settings
-    for parameter, value in scheduler.items():
-        added_settings = added_settings + \
-            str('--set=') + str(parameter) + '=' + str(value) + str(' ')
-    execute = "scrapy crawl " + added_settings + "sitemap"
 
-# print(execute)
-path = 'cd ' + os.getcwd() + '/bioschemas_scraper '
-os.system('bash bioschemas_scraper/scrape.sh ' +
-          '"' + path + '" ' + '"' + execute + '"')
+
+settings = Settings()
+settings.setmodule(bioschemas_scraper.settings)
+settings.update(overiding_settings)
+
+p = CrawlerProcess(settings=settings)
+
+spider = sitemap.BiosamplesSitemapSpider()
+spider.custom_settings = overiding_settings
+p.crawl(spider)
+p.start()

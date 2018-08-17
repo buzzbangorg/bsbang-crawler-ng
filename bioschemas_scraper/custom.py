@@ -20,7 +20,7 @@ def remove_url_schema(url):
     return edited_url
 
 
-def connect_db():
+def connect_db(settings):
     client = pymongo.MongoClient(
         settings['MONGODB_SERVER'],
         int(settings['MONGODB_PORT'])
@@ -47,7 +47,7 @@ def drop_db(dbname):
 
 
 def get_sitemap_url():
-    config_file = "../config/settings.ini"
+    config_file = "config/settings.ini"
     parser = ConfigParser()
     parser.read(config_file)
     for section_name in parser.sections():
@@ -62,6 +62,7 @@ def get_sitemap_url():
 
 def parse_sitemap(sitemap_urls):
     urls = dict()
+
     for url in sitemap_urls:
         response = requests.get(url)
         sitemap_xml = etree.fromstring(response.content)

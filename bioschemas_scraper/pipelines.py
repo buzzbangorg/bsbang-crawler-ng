@@ -16,10 +16,15 @@ class BioschemasScraperPipeline(object):
 
 class MongoDBPipeline(object):
 
-    def __init__(self):
-        client = connect_db()
-        db = client[settings['MONGODB_DB']]
-        self.collection = db[settings['MONGODB_COLLECTION']]
+    @classmethod
+    def from_crawler(cls, crawler):
+        o = cls()
+
+        o.client = connect_db(crawler.settings)
+        o.db = o.client[crawler.settings['MONGODB_DB']]
+        o.collection = o.db[crawler.settings['MONGODB_COLLECTION']]
+
+        return o
 
     def process_item(self, item, spider):
         self.collection.insert_one(item['jsonld'])

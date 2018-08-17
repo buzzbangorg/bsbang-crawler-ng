@@ -35,7 +35,9 @@ class ScrapingMiddleware(object):
             return None
 
     def process_response(self, request, response, spider):
-        spider.logger.info("Crawled - %s - %s", response.status, response.url)
+        if response.status != 200:
+            spider.logger.warn("Problem crawling page status - %s - %s", response.status, response.url)
+
         edited_url = remove_url_schema(response.url)
         if edited_url in urls:
             urls[edited_url] = 1

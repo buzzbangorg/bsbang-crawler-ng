@@ -44,23 +44,24 @@ for section_name in parser.sections():
 
 
 logfile = datetime.now().strftime("%Y%m%d-%H%M%S") + '-' + 'cronjob.log'
-user_args = {
+overiding_settings.update({
     'CONCURRENT_REQUESTS': args.con_req,
     'CONCURRENT_REQUESTS_PER_DOMAIN': args.con_req_dom,
-}
+})
 
 if args.optimize is True:
-    optimizer = {
+    overiding_settings.update({
         'OPTIMIZER_STATUS': True,
         'MONGODB_COLLECTION': 'test',
         'CLOSESPIDER_ITEMCOUNT': 200,
-    }
+    })
+
 
 if args.schedule is True:
-    scheduler = {
+    overiding_settings.update({
         'LOG_FILE': '../log/' + logfile,
         'LOG_ENABLED': True,
-    }
+    })
 
 
 settings = Settings()

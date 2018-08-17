@@ -18,7 +18,8 @@ class ScrapingMiddleware(object):
 
     def process_request(self, request, spider):
         x = self.collection.find_one(
-            {'buzz_url': remove_url_schema(request.url)})
+            {'url': remove_url_schema(request.url)})
+
         if x is not None:
             if datetime.datetime.now() - x['_id'].generation_time.replace(tzinfo=None) < datetime.timedelta(days=7):
                 spider.logger.info(

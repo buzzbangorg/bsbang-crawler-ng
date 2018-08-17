@@ -37,9 +37,9 @@ service mongodb status
 ``` 
 
 ## Usage
-**Step 1: Put initialization arguments in the config/setting.ini file**
+**Step 1: Copy config/settings.ini.example to settings.ini and configure**
 
-The defaults are probably going to be fine but you might want to check them.
+The defaults are probably going to be fine but you might want to check them with the optimization procedure as explained later on.
 
 **Step 2: Find optimal value of parameters for your hardware**
 

@@ -41,7 +41,7 @@ class ScrapingMiddleware(object):
         edited_url = remove_url_schema(response.url)
         if edited_url in urls:
             urls[edited_url] = 1
-            spider.logger.info("Crawling %d of %d pages",
+            spider.logger.info("Crawling %d of %d sitemap pages",
                                sum(urls.values()), len(urls))
         return response
 

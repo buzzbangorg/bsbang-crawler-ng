@@ -31,7 +31,7 @@ class ScrapingMiddleware(object):
                 spider.logger.info("URL requested - %s", request.url)
                 return None
         else:
-            spider.logger.info("URL requested - %s", request.url)
+            spider.logger.debug("URL requested - %s", request.url)
             return None
 
     def process_response(self, request, response, spider):

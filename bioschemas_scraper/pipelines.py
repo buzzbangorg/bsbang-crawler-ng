@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 import logging
-from scrapy.conf import settings
 from bioschemas_scraper.custom import connect_db
 
 

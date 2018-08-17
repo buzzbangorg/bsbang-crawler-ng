@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
 import datetime
-from scrapy.conf import settings
-from scrapy.spiders import SitemapSpider
 from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema, connect_db

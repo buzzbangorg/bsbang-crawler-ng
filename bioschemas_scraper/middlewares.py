@@ -1,4 +1,5 @@
 import datetime
+import logging
 from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema, connect_db
@@ -6,28 +7,28 @@ from bioschemas_scraper.custom import remove_url_schema, connect_db
 
 class ScrapingMiddleware(object):
 
+    def __init__(self, settings):
+        self.client = connect_db(settings)
+        self.db = self.client[settings['MONGODB_DB']]
+        self.collection = self.db[settings['MONGODB_COLLECTION']]
+
+        self.already_crawled_urls = set()
+        now = datetime.datetime.now()
+        days = 7
+        for doc in self.collection.find(projection={'url':True}):
+            if now - doc['_id'].generation_time.replace(tzinfo=None) < datetime.timedelta(days=days):
+                self.already_crawled_urls.add(doc['url'])
+
+        logging.info('Got %d urls crawled within the last %d days', len(self.already_crawled_urls), days)
+
     @classmethod
     def from_crawler(cls, crawler):
-        o = cls()
-
-        o.client = connect_db(crawler.settings)
-        o.db = o.client[crawler.settings['MONGODB_DB']]
-        o.collection = o.db[crawler.settings['MONGODB_COLLECTION']]
-
-        return o
+        return cls(crawler.settings)
 
     def process_request(self, request, spider):
-        x = self.collection.find_one(
-            {'url': remove_url_schema(request.url)})
-
-        if x is not None:
-            if datetime.datetime.now() - x['_id'].generation_time.replace(tzinfo=None) < datetime.timedelta(days=7):
-                spider.logger.info(
-                    "URL already scraped in past 7 days - %s", request.url)
-                raise IgnoreRequest()
-            else:
-                spider.logger.info("URL requested - %s", request.url)
-                return None
+        if request.url in self.already_crawled_urls:
+            spider.logger.info(
+                "URL already scraped in past 7 days - %s", request.url)
         else:
             spider.logger.debug("URL requested - %s", request.url)
             return None

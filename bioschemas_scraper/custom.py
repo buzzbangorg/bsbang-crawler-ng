@@ -73,7 +73,7 @@ def parse_sitemap(sitemap_urls):
 
 
 def generate_report(stats):
-    filepath = '../log/scrapy_stats.csv'
+    filepath = 'log/scrapy_stats.csv'
 
     stats['scraping time'] = stats['finish_time'] - stats['start_time']
     df = pd.DataFrame(list(stats.items()), columns=['parameter', 'value'])

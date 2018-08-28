@@ -1,6 +1,5 @@
 import datetime
 import logging
-from scrapy.exceptions import IgnoreRequest
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema, connect_db
 

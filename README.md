@@ -80,31 +80,3 @@ Please read CONTRIBUTING.md for details on our code of conduct, and the process 
 
 ## License
 This project is licensed under the Apache-2.0 License - see the LICENSE file for details
-
-
-## Mind Map
-- [x] Sitemap Crawling
-- [x] JSON-LD Extraction
-- [x] Item Pipeline Implementation
-- [x] MongoDB Connection
-- [x] Logging number of pages already crawled - [i of n] 
-- [x] Logging number of items already scraped 
-- [x] Separate extension for logging stats
-- [x] Generate reports in spreadsheet for performance comparison
-- [x] Log request and response status
-- [x] Prevent scraping items that are already scraped and kept in MongoDB
-- [x] Raise exceptions for DB conn error & sitemap url error
-- [x] Allowed user settings outside source control
-- [x] Unittests - Spider contracts 
-- [x] Filter out malicious massive input webpages, 
-- [x] Hardware benchmarking for optimal performance across various machines 
-- [x] Allow scrapy to crawl multiple domains/sitemaps 
-- [x] Record the scraping time in DB as well
-- [x] Write a Job scheduler for scheduling crawls
-- [x] Recrawl URLs which were crawled more than 7 days ago
-- [x] Error Checking in MongoDB using getLastError
-- [ ] Check the faithfulness of JSON-LD - if it is from Life Sciences domain - To be skipped
-- [ ] Handle unsuccessful responses - 40X and keep track of those URLs   
-- [ ] Write general scraper for pagination - issue 18
-- [ ] Make logging quieter
-- [ ] Create a common format for MongoDB database for different crawlers - decide on which metadata to store  

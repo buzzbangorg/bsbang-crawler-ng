@@ -48,8 +48,7 @@ There are two parameters that you need to tune for faster crawling on your syste
 Note: If you observe that increasing 'CONCURRENT_REQUESTS' is making your scraper faster, do not go about wildly increasing it. Check if the 'memusage/max' is less than or equal to 80% of CPU capacity. Beyond this, your system will choke.
 
 ```
-cd bioschemas_scraper
-python3 bsbang-scrape.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain> --optimize
+./scrape.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain> --optimize
 ```
 
 **Step 3: Crawl the sitemap and store the data in a MongoDB database**
@@ -57,22 +56,21 @@ python3 bsbang-scrape.py -con_req <No. of concurrent requests> -con_req_dom <No.
 Supply the tuned parameters and run the script.
 
 ```
-python3 bsbang-scrape.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain>
+./scrape.py -con_req <No. of concurrent requests> -con_req_dom <No. of concurrent request/domain>
 ```
 
 **Step 4: Schedule the crawler to recrawl the sitemaps at reqular intervals**
 
-This is optional and you may do it or skip it.
+This step is only required if you want the crawler to run at regular intervals.
 
 ```
-cd ..
-python3 scheduler.py -con_req <No, of concurrent requests> -con_req_dom <No. of concurrent request/domain> -freq <No. of days after which to repeat> -py_path=<path to python interpreter in your virtuaenv>
+./schedule.py -con_req <No, of concurrent requests> -con_req_dom <No. of concurrent request/domain> -freq <No. of days after which to repeat> -py_path=<path to python interpreter in your virtuaenv>
 ```
 
 eg:
 
 ```
-python3 scheduler.py -con_req 8 -con_req_dom 100 -freq 3 -py_path /home/innovationchef/Desktop/buzzbang/bin/python3
+./schedule.py -con_req 8 -con_req_dom 100 -freq 3 -py_path /home/innovationchef/Desktop/buzzbang/bin/python3
 ```
 
 One may check the cronjob with ```crontab -l``` and check the last execution status using ```service cron status```

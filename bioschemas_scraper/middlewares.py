@@ -14,7 +14,7 @@ class ScrapingMiddleware(object):
         self.already_crawled_urls = set()
         now = datetime.datetime.now()
         days = 7
-        for doc in self.collection.find(projection={'url':True}):
+        for doc in self.collection.find(projection={'url': True}):
             if now - doc['_id'].generation_time.replace(tzinfo=None) < datetime.timedelta(days=days):
                 self.already_crawled_urls.add(doc['url'])
 
@@ -32,7 +32,10 @@ class ScrapingMiddleware(object):
             spider.logger.debug("URL requested - %s", request.url)
             return None
 
-    def process_response(self, request, response, spider):
+    @staticmethod
+    def process_response(request, response, spider):
+        del request
+
         if response.status != 200:
             spider.logger.warn("Problem crawling page status - %s - %s", response.status, response.url)
 
@@ -41,6 +44,7 @@ class ScrapingMiddleware(object):
             urls[edited_url] = 1
             spider.logger.info("Crawling %d of %d sitemap pages",
                                sum(urls.values()), len(urls))
+
         return response
 
     def process_exception(self, request, exception, spider):

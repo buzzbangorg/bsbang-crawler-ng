@@ -1,5 +1,6 @@
 scrapy
 extruct
+pyld
 pymongo
 lxml
 requests

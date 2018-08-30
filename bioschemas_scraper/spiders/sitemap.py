@@ -1,5 +1,4 @@
 import datetime
-import pyld
 import logging
 from extruct.jsonld import JsonLdExtractor
 from bioschemas_scraper.custom import remove_url_schema, get_sitemap_url, parse_sitemap
@@ -25,24 +24,20 @@ class BiosamplesSitemapSpider(SitemapSpider):
         @returns requests 0 0
         @scrapes jsonld
         """
-
         jslde = JsonLdExtractor()
-        raw_jsonld = jslde.extract(response.body)
-        if len(raw_jsonld) == 0:
+        jsonld = jslde.extract(response.body)
+        if len(jsonld) == 0:
             logger.warning("No bioschemas at this URL - %s", response.url)
             yield None
         else:
-            normalized_jsonld = pyld.jsonld.normalize(raw_jsonld, {'algorithm': 'URDNA2015'})
-
             item = BioschemasScraperItem()
 
             item['jsonld'] = {
-                'schema': normalized_jsonld,
+                'schema': jsonld,
                 'url': remove_url_schema(response.url),
                 'datetime': datetime.datetime.utcnow().isoformat(),
                 'crawler-id': 'buzzbang-ng'
             }
 
             logger.info("Sample Extracted - %s", response.url)
-
             yield item

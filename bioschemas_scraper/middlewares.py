@@ -1,32 +1,20 @@
-import datetime
 import logging
 from bioschemas_scraper.spiders.sitemap import urls
 from bioschemas_scraper.custom import remove_url_schema, connect_db
 
+logger = logging.getLogger('statcol')
+
 
 class ScrapingMiddleware(object):
-
     def __init__(self, settings):
-        """
-        self.client = connect_db(settings)
-        self.db = self.client[settings['MONGODB_DB']]
-        self.collection = self.db[settings['MONGODB_COLLECTION']]
-
-        self.already_crawled_urls = set()
-        now = datetime.datetime.now()
-        days = 7
-        for doc in self.collection.find(projection={'url': True}):
-            if now - doc['_id'].generation_time.replace(tzinfo=None) < datetime.timedelta(days=days):
-                self.already_crawled_urls.add(doc['url'])
-
-        logging.info('Got %d urls crawled within the last %d days', len(self.already_crawled_urls), days)
-        """
-
         curs = connect_db(settings)
+        days = 7
         self.already_crawled_urls = set()
-        curs.execute("SELECT url FROM crawl WHERE last_crawled < current_date - integer '7'")
+        curs.execute("SELECT url FROM crawl WHERE last_crawled >= current_date - integer '%s'", (days,))
         for row in curs:
             self.already_crawled_urls.add(row[0])
+
+        logger.info("Found %d URLs already scraped in the past %d days" % (curs.rowcount, days))
 
     @classmethod
     def from_crawler(cls, crawler):

@@ -29,7 +29,7 @@ class ScrapingMiddleware(object):
             return None
 
     @staticmethod
-    def process_response(request, response, spider):
+    def process_response(_request, response, spider):
         if response.status != 200:
             spider.logger.warn("Problem crawling page status - %s - %s", response.status, response.url)
 

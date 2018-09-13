@@ -54,6 +54,3 @@ class ScrapingMiddleware(object):
                                sum(urls.values()), len(urls))
 
         return response
-
-    def process_exception(self, request, exception, spider):
-        pass

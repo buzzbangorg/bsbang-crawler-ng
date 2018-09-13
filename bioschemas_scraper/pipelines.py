@@ -1,4 +1,8 @@
 import logging
+
+import psycopg2
+import psycopg2.extras
+
 from bioschemas_scraper.custom import connect_db
 
 
@@ -18,11 +22,15 @@ class MongoDBPipeline(object):
         o = cls()
 
         o.client = connect_db(crawler.settings)
-        o.db = o.client[crawler.settings['MONGODB_DB']]
-        o.collection = o.db[crawler.settings['MONGODB_COLLECTION']]
+        # o.db = o.client[crawler.settings['MONGODB_DB']]
+        # o.collection = o.db[crawler.settings['MONGODB_COLLECTION']]
 
         return o
 
     def process_item(self, item, spider):
-        self.collection.insert_one(item['jsonld'])
+        self.client.execute(
+            'INSERT INTO crawl VALUES (%s, %s, %s, %s)',
+            (item['url'], item['last_crawled'], item['crawler_id'], psycopg2.extras.Json(item['schema'])))
+
+        # self.collection.insert_one(item['jsonld'])
         return item

@@ -1,8 +1,8 @@
 scrapy
 extruct
 pyld
-pymongo
 lxml
+psycopg2
 requests
 pandas
 python-crontab

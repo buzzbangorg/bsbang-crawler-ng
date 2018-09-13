@@ -1,5 +1,5 @@
 import os
-import pymongo
+import psycopg2
 import logging
 import requests
 import pandas as pd
@@ -20,16 +20,9 @@ def remove_url_schema(url):
 
 
 def connect_db(settings):
-    client = pymongo.MongoClient(
-        settings['MONGODB_SERVER'],
-        int(settings['MONGODB_PORT'])
-    )
-    try:
-        client.server_info()
-    except pymongo.errors.ServerSelectionTimeoutError as e:
-        raise CloseSpider('Unable to connect to MongoDB')
-    logger.info("Connected to MongoDB")
-    return client
+    conn = psycopg2.connect(settings['CRAWL_STORE_CONNSTRING'])
+    conn.autocommit = True
+    return conn.cursor()
 
 
 def drop_db(settings):

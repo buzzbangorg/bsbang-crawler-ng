@@ -33,21 +33,25 @@ class StatsCollector(object):
         crawler.signals.connect(ext.item_scraped, signal=signals.item_scraped)
 
         ext.settings = crawler.settings
-        client = connect_db(crawler.settings)
-        db = client[crawler.settings['MONGODB_DB']]
-        ext.collection = db[crawler.settings['MONGODB_COLLECTION']]
+        ext.curs = connect_db(crawler.settings)
+        # db = client[crawler.settings['MONGODB_DB']]
+        # ext.collection = db[crawler.settings['MONGODB_COLLECTION']]
         ext.item_count = crawler.settings['EXT_ITEMCOUNT']
 
         # return the extension object
         return ext
 
     def spider_opened(self, spider):
-        self.initial_db_size = self.collection.count()
+        self.curs.execute('SELECT count(*) from crawl')
+        self.initial_db_size = self.curs.fetchone()[0]
+
         logger.info("%d documents already present in the DB",
                     self.initial_db_size)
 
     def spider_closed(self, spider):
-        self.final_db_size = self.collection.count()
+        self.curs.execute('SELECT count(*) from crawl')
+        self.final_db_size = self.curs.fetchone()[0]
+
         logger.info("%d documents present in the DB after crawl",
                     self.final_db_size)
 

@@ -7,6 +7,7 @@ from bioschemas_scraper.custom import remove_url_schema, connect_db
 class ScrapingMiddleware(object):
 
     def __init__(self, settings):
+        """
         self.client = connect_db(settings)
         self.db = self.client[settings['MONGODB_DB']]
         self.collection = self.db[settings['MONGODB_COLLECTION']]
@@ -19,6 +20,13 @@ class ScrapingMiddleware(object):
                 self.already_crawled_urls.add(doc['url'])
 
         logging.info('Got %d urls crawled within the last %d days', len(self.already_crawled_urls), days)
+        """
+
+        curs = connect_db(settings)
+        self.already_crawled_urls = set()
+        curs.execute("SELECT url FROM crawl WHERE last_crawled < current_date - integer '7'")
+        for row in curs:
+            self.already_crawled_urls.add(row[0])
 
     @classmethod
     def from_crawler(cls, crawler):

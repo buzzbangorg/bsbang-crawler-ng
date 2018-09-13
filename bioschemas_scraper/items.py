@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-
 import scrapy
 
 
 class BioschemasScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    jsonld = scrapy.Field()
+    schema = scrapy.Field()
+    url = scrapy.Field()
+    last_crawled = scrapy.Field()
+    crawler_id = scrapy.Field()

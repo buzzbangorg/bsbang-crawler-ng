@@ -32,12 +32,10 @@ class BiosamplesSitemapSpider(SitemapSpider):
         else:
             item = BioschemasScraperItem()
 
-            item['jsonld'] = {
-                'schema': jsonld,
-                'url': remove_url_schema(response.url),
-                'datetime': datetime.datetime.utcnow().isoformat(),
-                'crawler-id': 'buzzbang-ng'
-            }
+            item['schema'] = jsonld
+            item['url'] = remove_url_schema(response.url)
+            item['last_crawled'] = datetime.datetime.utcnow().isoformat()
+            item['crawler_id'] = 'buzzbang-ng'
 
             logger.info("Sample Extracted - %s", response.url)
             yield item
